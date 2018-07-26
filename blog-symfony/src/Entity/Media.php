@@ -61,12 +61,12 @@ class Media
         return $this;
     }
 
-    public function getIdTypeMedia(): ?TypeMedia
+    public function getIdTypeMedia(): TypeMedia
     {
         return $this->id_type_media;
     }
 
-    public function setIdTypeMedia(?TypeMedia $id_type_media): self
+    public function setIdTypeMedia(TypeMedia $id_type_media): self
     {
         $this->id_type_media = $id_type_media;
 
