@@ -1,7 +1,7 @@
 {% extends "layout/base.html.twig" %}
 
 {% block zonecontenu %}
-
+    <section class="elmt-articles">
         <h1>Mes articles</h1>
 
         {% if postList|length == 0 %}
@@ -16,9 +16,24 @@
                 {% set date = post.dateUpdate|date("d-m-Y H:i") %}
                 {% set slug = post.slug %}
 
-                {% include "content/post/post-list-content.html.twig" with {"title": title, "headcontent": headcontent, "date": date, "slug":slug} %}
+                {% include "content/post/post-list-content.html.twig" with { "title": title, "headcontent": headcontent, "date": date, "slug":slug } %}
             {% endfor %}
 
-        {% endif %}
+            {# Display the navigation element #}
+            {%  if postNumber > 10 %}
 
+                {% set pageNumber = postNumber / 10 %}
+
+                <div class="text-right nav-menu">
+                    {% for page in 0..pageNumber|round(0,'floor') %}
+
+                        {% set isActualPage = page == actualPage ? true : false %}
+                        {% include "content/fragment/menu-navigation.html.twig" with { "slug":"/post/list", "page": page, "isActualPage":isActualPage } %}
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+    </section>
 {%  endblock %}
