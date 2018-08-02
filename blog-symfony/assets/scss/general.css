@@ -1,0 +1,13 @@
+.elmt-blog-list {
+  display: block; }
+  .elmt-blog-list header {
+    display: flex; }
+    .elmt-blog-list header .title {
+      font-size: 2em;
+      font-weight: bold;
+      width: 80%; }
+    .elmt-blog-list header .date {
+      font-size: 1em;
+      flex: 1; }
+
+/*# sourceMappingURL=general.css.map */

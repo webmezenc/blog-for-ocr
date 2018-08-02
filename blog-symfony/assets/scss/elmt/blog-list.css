@@ -1,0 +1,22 @@
+.elmt-blog-list {
+  display: block;
+  margin-bottom: 35px; }
+  .elmt-blog-list header {
+    color: white;
+    display: flex;
+    padding: 10px; }
+    .elmt-blog-list header .title {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: left;
+      width: 80%; }
+    .elmt-blog-list header .date {
+      font-size: 1em;
+      flex: 1;
+      text-align: right; }
+  .elmt-blog-list section {
+    padding: 10px; }
+    .elmt-blog-list section .btn-nav {
+      text-align: right; }
+
+/*# sourceMappingURL=blog-list.css.map */
