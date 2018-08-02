@@ -1,5 +1,24 @@
 {% extends "layout/base.html.twig" %}
 
-{% block content %}
-    <h1>Liste des articles du blog</h1>
+{% block zonecontenu %}
+
+        <h1>Mes articles</h1>
+
+        {% if postList|length == 0 %}
+            <div class="alert alert-info">
+                Nous sommes désolés, aucun article n'est actuellement disponible sur le blog, nous vous invitons à revenir ultérieurement.
+            </div>
+        {% else %}
+
+            {% for post in postList %}
+                {% set title = post.title %}
+                {% set headcontent = post.headcontent %}
+                {% set date = post.dateCreate|date("d-m-Y H:i") %}
+                {% set slug = post.slug %}
+
+                {% include "content/post/post-list-content.html.twig" with {"title": title, "headcontent": headcontent, "date": date, "slug":slug} %}
+            {% endfor %}
+
+        {% endif %}
+
 {%  endblock %}

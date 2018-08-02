@@ -42,7 +42,7 @@ class PostRepository extends ServiceEntityRepository
                           -> andWhere( "p.state = 1" )
                           -> getQuery();
 
-            return $query -> getScalarResult();
+            return $query -> getArrayResult();
 
         } catch( StringNotFoundException $e ) {
             throw $e;
