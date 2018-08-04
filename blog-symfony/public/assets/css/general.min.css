@@ -1,0 +1,13 @@
+.elmt-blog-list { display: block; margin-bottom: 35px; }
+.elmt-blog-list header { color: white; display: -webkit-box; display: -ms-flexbox; display: flex; padding: 10px; }
+.elmt-blog-list header .title { font-size: 1.5em; font-weight: bold; text-align: left; width: 80%; }
+.elmt-blog-list header .date { font-size: 1em; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; text-align: right; }
+.elmt-blog-list section { padding: 10px; }
+.elmt-blog-list section .btn-nav { text-align: right; }
+
+.elmt-articles .nav-menu a { background: #18BC9C; color: white; padding: 5px; }
+.elmt-articles .nav-menu a:hover { background: #18BC9A; color: white; }
+.elmt-articles .nav-menu .selected { background: white; color: #18BC9C; }
+.elmt-articles .nav-menu .selected:hover { background: inherit; color: inherit; cursor: initial; }
+
+/*# sourceMappingURL=general.min.css.map */

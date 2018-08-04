@@ -26,4 +26,23 @@ class AppController extends Controller
             'errorMSG' => $msg,
         ]);
     }
+
+
+    /**
+     * @param callable $process
+     * @param array $parameters
+     *
+     * @return Response
+     */
+    public function processController( callable $process, array $parameters ): Response
+    {
+        try {
+            return call_user_func_array( $process, $parameters );
+        }  catch( \Exception $e ) {
+            return $this -> getResponseWithViewError( $e -> getMessage() );
+        }
+
+    }
+
+
 }

@@ -2,33 +2,38 @@
 /**
  * Created by PhpStorm.
  * User: admin4111687
- * Date: 02/08/2018
- * Time: 14:28
+ * Date: 04/08/2018
+ * Time: 12:51
  */
 
-namespace App\Utils\Services\Post;
+namespace App\Application\Query;
 
 
 use App\Entity\Post;
 use App\Entity\ValueObject\OrderLimit;
 use App\Exception\PostServicesException;
-use App\Repository\PostRepository;
+use App\Infrastructure\Repository\RepositoryAdapterInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use PHPUnit\Runner\Exception;
+use Doctrine\ORM\Repository\RepositoryFactory;
 
-class PostServices
+class PostQuery
 {
 
     private $postRepository;
 
     /**
-     * PostServices constructor.
+     * PostQuery constructor.
+     * @param RepositoryAdapterInterface $postRepository
      */
-    public function __construct( PostRepository $postRepository )
+    public function __construct( RepositoryAdapterInterface $postRepository )
     {
-        $this -> postRepository = $postRepository;
+        $this -> repository = $repository;
     }
 
+    /**
+     * @param string $slug
+     * @return Post
+     */
 
     public function gePublishPostBySlug( string $slug ): Post
     {
@@ -72,7 +77,5 @@ class PostServices
         }
 
     }
-
-
 
 }
