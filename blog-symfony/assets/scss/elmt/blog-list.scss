@@ -1,0 +1,32 @@
+.elmt-blog-list {
+  display: block;
+  margin-bottom: 35px;
+
+  header {
+    color: white;
+    display: flex;
+    padding: 10px;
+
+    .title {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: left;
+      width: 80%;
+    }
+
+    .date {
+      font-size: 1em;
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+  section {
+    padding: 10px;
+
+    .btn-nav {
+      text-align: right;
+    }
+  }
+
+}
