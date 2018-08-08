@@ -6,11 +6,11 @@
  * Time: 12:56
  */
 
-namespace App\Infrastructure\Repository;
+namespace App\Infrastructure\Repository\Entity;
 
 use App\Entity\ValueObject\OrderLimit;
 
-interface RepositoryAdapterInterface
+interface PostRepositoryAdapterInterface
 {
     public function getValidPostWithOrderAndLimit( OrderLimit $orderLimit ): array;
     public function getNumberOfValidPost(): int;

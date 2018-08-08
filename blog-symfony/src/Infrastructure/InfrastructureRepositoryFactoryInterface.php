@@ -13,5 +13,5 @@ use Psr\Container\ContainerInterface;
 
 interface InfrastructureRepositoryFactoryInterface
 {
-    static public function create( string $name, string $provider, ContainerInterface $container );
+    public function create( string $name, string $provider );
 }

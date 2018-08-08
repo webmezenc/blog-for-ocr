@@ -12,4 +12,5 @@ namespace App\Domain\UseCases;
 interface UseCasesLogicInterface
 {
     public function process(): array;
+
 }
