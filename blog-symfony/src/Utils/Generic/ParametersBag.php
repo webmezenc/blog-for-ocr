@@ -19,33 +19,55 @@ class ParametersBag implements ParametersBagInterface
      */
     private $parameterBag;
 
+
+    /**
+     * ParametersBag constructor.
+     *
+     * @param array $parameters
+     */
     public function __construct(array $parameters = array())
     {
         $this -> parameterBag = new ParameterBag($parameters);
     }
 
-    static public function create() {
-        return new ParameterBag();
-    }
 
+    /**
+     * @return array
+     */
     public function all(): array
     {
         return $this -> parameterBag -> all();
     }
 
+
+    /**
+     * @param array $parameters
+     */
     public function add(array $parameters = array())
     {
-        // TODO: Implement add() method.
+        return $this -> parameterBag -> add( $parameters );
     }
 
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function get(string $key)
     {
-        // TODO: Implement get() method.
+        return $this -> parameterBag -> get($key);
     }
 
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
     public function has(string $key): bool
     {
-        // TODO: Implement has() method.
+        return $this -> parameterBag -> has($key);
     }
 
 

@@ -73,6 +73,8 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 
     /**
      * @param string $provider
+     *
+     * @throws InfrastructureAdapterException
      */
     private function getProviderRepository( string $provider )
     {

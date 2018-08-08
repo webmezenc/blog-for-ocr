@@ -15,6 +15,7 @@ use App\Exception\ParameterIsNotFoundException;
 use App\Exception\UnhautorizedException;
 use App\Infrastructure\InfrastructureRequestInterface;
 use App\Utils\Generic\ObjectServicesGeneric;
+use App\Utils\Generic\ParametersBagInterface;
 use App\Utils\Services\Post\PostServices;
 
 class Issue3UseCases implements UseCasesLogicInterface
@@ -33,17 +34,23 @@ class Issue3UseCases implements UseCasesLogicInterface
 
 
     /**
-     * @var array
+     * @var ParametersBagInterface
      */
-    private $parameters = [];
+    private $parametersBag;
+
 
     /**
      * Issue3UseCases constructor.
+     *
+     * @param PostServices $postServices
+     * @param InfrastructureRequestInterface $request
+     * @param ParametersBagInterface $parametersBag
      */
-    public function __construct( PostServices $postServices, InfrastructureRequestInterface $request )
+    public function __construct( PostServices $postServices, InfrastructureRequestInterface $request, ParametersBagInterface $parametersBag )
     {
         $this -> postServices = $postServices;
         $this -> request = $request;
+        $this -> parametersBag = $parametersBag;
     }
 
     /**
@@ -71,22 +78,14 @@ class Issue3UseCases implements UseCasesLogicInterface
      */
     private function getParameters(): array
     {
-        if( !$this -> request -> getRequest() -> has("slug") ) {
+        if( !$this -> parametersBag -> has("slug") ) {
             throw new ParameterIsNotFoundException("The parameter (slug) isn't found");
         }
 
-        return $this -> mergeRequestParametersAndLocalParameters( $this -> request -> getRequest() -> all() );
+        return $this -> parametersBag -> all();
     }
 
 
-    /**
-     * @param array $requestParameters
-     *
-     * @return array
-     */
-    private function mergeRequestParametersAndLocalParameters( array $requestParameters ): array {
-        return array_merge( $requestParameters, $this -> parameters );
-    }
 
 
 
