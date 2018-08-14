@@ -16,11 +16,14 @@ class ObjectServicesGenericTest extends TestCase
 
     private $object;
 
+
     public function setUp() {
 
         $this -> object = new \stdClass();
         $this -> object -> name = "test";
         $this -> object -> role = "unit test";
+        $this -> object -> setName = function(){};
+        $this -> object -> setRole = function(){};
 
     }
 
@@ -35,4 +38,19 @@ class ObjectServicesGenericTest extends TestCase
 
         ObjectServicesGeneric::getArrayFromObject( true );
     }
+
+
+    public function testShouldObtainAValidSetter() {
+        $this -> assertTrue( ObjectServicesGeneric::isSetter("name",$this -> object ) );
+    }
+
+
+    public function testShouldObtainErrorWhenObtainASetterButObjectIsInvalid() {
+
+        $this -> expectException("\App\Exception\TypeErrorException");
+
+        ObjectServicesGeneric::isSetter("name",false );
+    }
+
+
 }

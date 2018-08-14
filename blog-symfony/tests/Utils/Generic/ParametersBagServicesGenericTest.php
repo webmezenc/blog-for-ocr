@@ -28,4 +28,20 @@ class ParametersBagServicesGenericTest extends TestCase
 
         $this -> assertInternalType("array",$this -> parameterBag -> all() );
     }
+
+    public function testWhenObtainTrueWhenKeyExist() {
+        $this -> assertTrue( $this -> parameterBag -> has("test") );
+    }
+
+    public function testWhenObtainFalseWhenKeyIsntExist() {
+        $this -> assertNotTrue( $this -> parameterBag -> has("testUnitNotExist") );
+    }
+
+    public function testWhenObtainValidValue() {
+        $this -> assertEquals("unit", $this -> parameterBag -> get("test") );
+    }
+
+    public function testWhenObtainNullIfKeyIsntValidParameter() {
+        $this -> assertNull( $this -> parameterBag -> get("testUnitNotExist") );
+    }
 }

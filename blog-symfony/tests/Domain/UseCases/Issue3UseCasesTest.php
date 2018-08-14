@@ -13,6 +13,7 @@ use App\Infrastructure\InfrastructureRequestInterface;
 use App\Infrastructure\Repository\RepositoryFactory;
 use App\Infrastructure\Request\RequestFactory;
 use App\Tests\Infrastructure\Kernel\KernelFactory;
+use App\Utils\Generic\ParametersBag;
 use App\Utils\Services\Post\PostServices;
 use PHPUnit\Framework\TestCase;
 
@@ -55,10 +56,9 @@ class Issue3UseCasesTest extends TestCase
 
     public function testWhenPostIsValidObtainPostInformationsInArray() {
 
-        $request = $this -> request;
-        $request -> getRequest() -> set("slug","blog-is-open");
+        $parameterBag  = new ParametersBag( ["slug" => "blog-is-open"] );
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $request );
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request,$parameterBag );
 
         $this -> assertInternalType( "array", $issue3UseCases -> process() );
 
@@ -69,10 +69,9 @@ class Issue3UseCasesTest extends TestCase
 
         $this -> expectException( "\App\Exception\UnhautorizedException");
 
-        $request = $this -> request;
-        $request -> getRequest() -> set("slug","unittestnotpublished");
+        $parameterBag  = new ParametersBag( ["slug" => "unittestnotpublished"] );
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $request );
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag );
 
         $issue3UseCases -> process();
     }
@@ -82,7 +81,10 @@ class Issue3UseCasesTest extends TestCase
 
         $this -> expectException("\App\Exception\NotFoundException");
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request );
+        $parameterBag  = new ParametersBag();
+
+
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag );
 
         $issue3UseCases -> process();
 

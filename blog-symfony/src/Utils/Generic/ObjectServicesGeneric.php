@@ -88,13 +88,35 @@ class ObjectServicesGeneric
 
 
     /**
+     * @param string $property
+     *
+     * @param object $object
+     *
+     * @return bool
+     *
+     * @throws TypeErrorException
+     */
+    static public function isSetter( string $property, $object ): bool {
+
+        if( !is_object($object) ) {
+            throw new TypeErrorException("Object parameter isn't a valid object");
+        }
+
+        $setter = "set".ucfirst($property);
+
+        return method_exists($object,$setter);
+
+    }
+
+
+    /**
      * @param $object
      *
      * @return \ReflectionProperty[]
      *
      * @throws \ReflectionException
      */
-    static private function getPropertiesWithReflexion( $object ): array {
+    static public function getPropertiesWithReflexion( $object ): array {
 
         try {
 
