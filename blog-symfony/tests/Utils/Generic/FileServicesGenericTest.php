@@ -32,7 +32,7 @@ class FileServicesGenericTest extends TestCase
 
     public function testTheFileIsntFound() {
 
-        $this -> expectException("App\Exception\FileException");
+        $this -> expectException("App\Exception\FileNotFoundException");
 
         $this -> fileServices -> getContentFile("unitTestError.test");
     }

@@ -11,8 +11,11 @@ namespace App\Repository\InMemory;
 
 use App\Entity\User;
 use App\Exception\EntityNotFoundException;
+use App\Exception\EntityNotValidException;
+use App\Utils\Generic\EntityServicesGeneric;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
+use App\Utils\Generic\ObjectServicesGeneric;
 
 class MemoryRepository
 {
@@ -21,6 +24,11 @@ class MemoryRepository
      * @var array
      */
     protected $repositoryTupples;
+
+    /**
+     * @var InMemoryDataServicesGeneric
+     */
+    protected $inMemoryDataServicesGeneric;
 
 
     /**
@@ -47,6 +55,7 @@ class MemoryRepository
     public function __construct( InMemoryDataServicesGeneric $inMemoryDataServicesGeneric, HydratorServicesGeneric $hydratorServicesGeneric, string $entity ) {
 
         $this -> repositoryTupples = $inMemoryDataServicesGeneric -> getDataForEntity( $entity );
+        $this -> inMemoryDataServicesGeneric = $inMemoryDataServicesGeneric;
         $this -> hydratorServicesGeneric = $hydratorServicesGeneric;
         $this -> entity = $entity;
     }
@@ -65,13 +74,38 @@ class MemoryRepository
     }
 
 
+
+
+    /**
+     * @param object $entity
+     *
+     * @throws EntityNotValidException
+     * @throws \App\Exception\TypeErrorException
+     */
+    public function persist( $entity ) {
+
+        $className = EntityServicesGeneric::getClassName($this -> entity);
+
+        if( $entity instanceof $className ) {
+
+            $tabParameters = ObjectServicesGeneric::getArrayFromObject( $entity );
+
+            $this -> repositoryTupples = $this -> inMemoryDataServicesGeneric -> addDataInTuppleWithAutoIncrement( $tabParameters, $this -> repositoryTupples );
+
+        } else {
+            throw new EntityNotValidException("Entity isn't a valid instance of ".$className);
+        }
+    }
+
+
+
     /**
      * @param array $params
      * @return array|null
      */
     public function findBy( array $params ): ?array {
 
-        return $this -> searchInTuppleWithParameters( $params );
+        return $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
     }
 
 
@@ -83,7 +117,7 @@ class MemoryRepository
      * @throws EntityNotFoundException
      */
     public function findOneBy( array $params ) {
-        $find = $this -> searchInTuppleWithParameters( $params );
+        $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
 
         if( is_null($find) ) {
             throw new EntityNotFoundException("Entity isn't found");
@@ -93,49 +127,7 @@ class MemoryRepository
     }
 
 
-    /**
-     * @param array $params
-     *
-     * @return array|null
-     */
-    private function searchInTuppleWithParameters( array $params ): ?array {
 
-        $arrReturn = [];
-
-        foreach( $this -> repositoryTupples as $tupple ) {
-
-            $entityInTupple = $this -> searchInTupple($params, $tupple );
-
-            if( is_object($entityInTupple) ) {
-                $arrReturn[] = $entityInTupple;
-            }
-
-        }
-
-        return count($arrReturn) === 0 ? null : $arrReturn;
-
-    }
-
-    /**
-     * @param array $params
-     * @param $tupple
-     *
-     * @return object
-     */
-    private function searchInTupple(array $params, $tupple )
-    {
-        foreach ($params as $key => $value) {
-
-            if (key_exists($key, $tupple)) {
-
-                if( $tupple[$key] === $value ) {
-                    return $this -> hydratorServicesGeneric->hydrate($this->entity, $tupple);
-                }
-
-            }
-
-        }
-    }
 
 
 

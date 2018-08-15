@@ -10,10 +10,11 @@ namespace App\Repository\InMemory;
 
 
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
 
-class UserRepository extends MemoryRepository implements RepositoryAdapterInterface
+class UserRepository extends MemoryRepository implements RepositoryAdapterInterface, UserRepositoryAdapterInterface
 {
 
     const ENTITY = "User";
@@ -28,5 +29,6 @@ class UserRepository extends MemoryRepository implements RepositoryAdapterInterf
     public function __construct( InMemoryDataServicesGeneric $inMemoryDataServicesGeneric, HydratorServicesGeneric $hydratorServicesGeneric ) {
         parent::__construct( $inMemoryDataServicesGeneric, $hydratorServicesGeneric, self::ENTITY );
     }
+
 
 }

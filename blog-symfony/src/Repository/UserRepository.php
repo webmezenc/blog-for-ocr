@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements RepositoryAdapterInterface
+class UserRepository extends ServiceEntityRepository implements RepositoryAdapterInterface, UserRepositoryAdapterInterface
 {
     public function __construct(RegistryInterface $registry)
     {

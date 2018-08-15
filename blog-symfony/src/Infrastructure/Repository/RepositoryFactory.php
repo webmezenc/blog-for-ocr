@@ -164,7 +164,7 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 
             $repositoryClassName = "\App\Repository\InMemory\\".$this -> name."Repository";
 
-            $repository = new $repositoryClassName( new InMemoryDataServicesGeneric( new FileServicesGeneric() ), new HydratorServicesGeneric( new ObjectServicesGeneric()) );
+            $repository = new $repositoryClassName( new InMemoryDataServicesGeneric( new FileServicesGeneric(), new HydratorServicesGeneric( new ObjectServicesGeneric() ) ), new HydratorServicesGeneric( new ObjectServicesGeneric()) );
 
             return $this -> validationRepository( $repository );
 

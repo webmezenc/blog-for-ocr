@@ -8,6 +8,7 @@
 
 namespace App\Tests\Infrastructure\Repository\InMemory;
 
+use App\Entity\User;
 use App\Repository\InMemory\MemoryRepository;
 use App\Utils\Generic\FileServicesGeneric;
 use App\Utils\Generic\HydratorServicesGeneric;
@@ -22,7 +23,15 @@ class MemoryRepositoryTest extends TestCase
 
     public function setUp() {
         $fileServicesGeneric = new FileServicesGeneric();
-        $this -> memoryRepository = new MemoryRepository( new InMemoryDataServicesGeneric($fileServicesGeneric) , new HydratorServicesGeneric( new ObjectServicesGeneric() ), "User");
+        $this -> memoryRepository = new MemoryRepository( new InMemoryDataServicesGeneric($fileServicesGeneric, new HydratorServicesGeneric( new ObjectServicesGeneric() )) , new HydratorServicesGeneric( new ObjectServicesGeneric() ), "User");
+    }
+
+
+
+
+
+    public function testShouldRemoveEntityButEntityIsntInRepository() {
+
     }
 
     public function testShouldObtainValidUserEntityWithFindOneByMethod() {
@@ -30,6 +39,26 @@ class MemoryRepositoryTest extends TestCase
         $this -> assertInstanceOf("\App\Entity\User", $user );
     }
 
+    public function testWhenAddEntityButEntityIsntAValidInsance() {
+        $this -> expectException("\App\Exception\EntityNotValidException");
+
+        $this -> memoryRepository -> persist( new \stdClass() );
+    }
+
+    public function testShouldAddEntity() {
+
+        $User = new User();
+        $User -> setEmail("essai@unittest.com");
+        $User -> setState(1);
+        $User -> setFirstname("Unit");
+        $User -> setLastname("Test");
+        $User -> setLevel(0);
+        $User -> setPassword("test");
+
+        $this -> memoryRepository -> persist( $User );
+
+        $this -> assertInstanceOf("\App\Entity\User", $this -> memoryRepository -> find(3));
+    }
 
     public function testShouldObtainAValidUserEntityWithUserExist() {
 
@@ -55,7 +84,6 @@ class MemoryRepositoryTest extends TestCase
 
     }
 
-
     public function testShouldObtainAValidEntityWhenSearchWithOneParameter() {
 
         $searchUser = $this -> memoryRepository -> findBy( array("email" => "contact@webmezenc.com") );
@@ -63,7 +91,6 @@ class MemoryRepositoryTest extends TestCase
         $this -> assertInternalType("array", $searchUser);
 
     }
-
 
     public function testShouldSearchEntityButSearchIsAFailure() {
 
@@ -78,7 +105,7 @@ class MemoryRepositoryTest extends TestCase
         $this -> expectException("\App\Exception\FileNotFoundException");
 
         $fileServicesGeneric = new FileServicesGeneric();
-        $memoryRepository = new MemoryRepository( new InMemoryDataServicesGeneric($fileServicesGeneric) , new HydratorServicesGeneric( new ObjectServicesGeneric() ),"UnitTestFalseEntity");
+        $memoryRepository = new MemoryRepository( new InMemoryDataServicesGeneric($fileServicesGeneric,new HydratorServicesGeneric( new ObjectServicesGeneric() )) , new HydratorServicesGeneric( new ObjectServicesGeneric() ),"UnitTestFalseEntity");
 
     }
 }

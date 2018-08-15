@@ -22,13 +22,13 @@ class UserServicesTest extends TestCase
         $kernel = KernelFactory::getKernel();
 
         $repositoryFactory = new RepositoryFactory( $kernel -> getDic() );
-        $userRepository = $repositoryFactory -> create("User" );
+        $userRepository = $repositoryFactory -> create("User", "inMemory");
 
         $this -> userServices = new UserServices( $userRepository );
     }
 
 
-    public function testShouldObtainEntityWhenUserIsRegistred() {
+    public function testShouldObtainEntityWhenUserIsNotRegistred() {
 
         $User = new User();
         $User -> setEmail( "contact@webmezenc.com" );

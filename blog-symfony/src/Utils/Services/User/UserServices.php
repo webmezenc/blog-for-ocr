@@ -11,6 +11,7 @@ namespace App\Utils\Services\User;
 
 use App\Entity\User;
 use App\Exception\EntityAlreadyExistException;
+use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Repository\UserRepository;
 
 class UserServices
@@ -24,9 +25,9 @@ class UserServices
     /**
      * UserServices constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepositoryAdapterInterface $userRepository
      */
-    public function __construct( UserRepository $userRepository ) {
+    public function __construct( UserRepositoryAdapterInterface $userRepository ) {
         $this -> userRepository = $userRepository;
     }
 
@@ -41,7 +42,10 @@ class UserServices
     public function register( User $user ): User {
 
         try {
+
             $this -> isRegistrable( $user );
+
+
         } catch( EntityAlreadyExistException $e ) {
             throw $e;
         }
