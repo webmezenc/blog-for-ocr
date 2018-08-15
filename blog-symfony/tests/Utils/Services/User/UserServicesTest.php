@@ -31,7 +31,12 @@ class UserServicesTest extends TestCase
     public function testShouldObtainEntityWhenUserIsNotRegistred() {
 
         $User = new User();
-        $User -> setEmail( "contact@webmezenc.com" );
+        $User -> setEmail( "contactu@unittest.com" );
+        $User -> setPassword("test");
+        $User -> setFirstname("Unit");
+        $User -> setLevel(1);
+        $User -> setLastname("Test");
+        $User -> setState(1);
 
         $this -> assertInstanceOf("\App\Entity\User", $this -> userServices -> register( $User ) );
 

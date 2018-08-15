@@ -13,4 +13,6 @@ interface RepositoryAdapterInterface
 {
     public function findBy( array $params );
     public function findOneBy( array $params );
+    public function find( int $id );
+
 }

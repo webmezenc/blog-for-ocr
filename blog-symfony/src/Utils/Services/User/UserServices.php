@@ -11,6 +11,7 @@ namespace App\Utils\Services\User;
 
 use App\Entity\User;
 use App\Exception\EntityAlreadyExistException;
+use App\Exception\EntityNotFoundException;
 use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Repository\UserRepository;
 
@@ -45,6 +46,8 @@ class UserServices
 
             $this -> isRegistrable( $user );
 
+            return $this -> userRepository -> persist( $user );
+
 
         } catch( EntityAlreadyExistException $e ) {
             throw $e;
@@ -62,13 +65,18 @@ class UserServices
      */
     private function isRegistrable( User $user ): bool {
 
-       $User =  $this -> userRepository -> findOneBy( array("email" => $user -> getEmail() ));
 
-       if( $User instanceof User ) {
-           throw new EntityAlreadyExistException("User identified by ".$user -> getEmail()." is already exist");
-       }
+        try {
+            $User =  $this -> userRepository -> findOneBy( array("email" => $user -> getEmail() ));
 
-       return true;
+            if( $User instanceof User ) {
+                throw new EntityAlreadyExistException("User identified by ".$user -> getEmail()." is already exist");
+            }
+
+        } catch( EntityNotFoundException $e ) {
+            return true;
+        }
+
 
     }
 

@@ -92,6 +92,10 @@ class MemoryRepository
 
             $this -> repositoryTupples = $this -> inMemoryDataServicesGeneric -> addDataInTuppleWithAutoIncrement( $tabParameters, $this -> repositoryTupples );
 
+            end( $this -> repositoryTupples );
+
+            return $this -> hydratorServicesGeneric -> hydrate( $this -> entity, current($this -> repositoryTupples));
+
         } else {
             throw new EntityNotValidException("Entity isn't a valid instance of ".$className);
         }
