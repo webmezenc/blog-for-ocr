@@ -28,11 +28,11 @@ class HydratorServicesGeneric
     }
 
 
-    static public function hydrate( string $entity, array $params ) {
+    public function hydrate( string $entity, array $params ) {
 
         EntityServicesGeneric::isExist( $entity );
 
-        return new User();
+        return $this -> createInstanceAndHydrate(  $entity,  $params );
     }
 
 
@@ -40,13 +40,38 @@ class HydratorServicesGeneric
      * @param string $entity
      * @param array $params
      *
-     * @return
+     * @return object
+     *
+     * @throws \App\Exception\TypeErrorException
      */
-    static private function hydrateWithReflexion( string $entity, array $params ) {
+    private function createInstanceAndHydrate( string $entity, array $params ) {
 
         $className = EntityServicesGeneric::getClassName($entity);
 
+        $instanceObject = new $className();
 
+        return $this -> hydrateInstanceObject($instanceObject, $params);
+    }
+
+    /**
+     * @param object $instanceObject
+     * @param array $params
+     *
+     * @return object
+     *
+     * @throws \App\Exception\TypeErrorException
+     */
+    private function hydrateInstanceObject($instanceObject, array $params)
+    {
+        foreach ($params as $property => $value) {
+
+            if ($this->objectServicesGeneric->isSetter($property, $instanceObject)) {
+                $setter = "set" . ucfirst($property);
+                $instanceObject->$setter($value);
+            }
+        }
+
+        return $instanceObject;
     }
 
 

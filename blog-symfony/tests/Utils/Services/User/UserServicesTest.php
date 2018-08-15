@@ -22,7 +22,7 @@ class UserServicesTest extends TestCase
         $kernel = KernelFactory::getKernel();
 
         $repositoryFactory = new RepositoryFactory( $kernel -> getDic() );
-        $userRepository = $repositoryFactory -> create("User");
+        $userRepository = $repositoryFactory -> create("User" );
 
         $this -> userServices = new UserServices( $userRepository );
     }

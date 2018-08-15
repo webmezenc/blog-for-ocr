@@ -9,11 +9,24 @@
 namespace App\Repository\InMemory;
 
 
-use App\Exception\EntityNotFoundException;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\HydratorServicesGeneric;
+use App\Utils\Generic\InMemoryDataServicesGeneric;
 
-class UserRepository
+class UserRepository extends MemoryRepository implements RepositoryAdapterInterface
 {
 
+    const ENTITY = "User";
 
+    /**
+     * UserRepository constructor.
+     * @param InMemoryDataServicesGeneric $inMemoryDataServicesGeneric
+     * @param HydratorServicesGeneric $hydratorServicesGeneric
+     *
+     * @throws \Exception
+     */
+    public function __construct( InMemoryDataServicesGeneric $inMemoryDataServicesGeneric, HydratorServicesGeneric $hydratorServicesGeneric ) {
+        parent::__construct( $inMemoryDataServicesGeneric, $hydratorServicesGeneric, self::ENTITY );
+    }
 
 }

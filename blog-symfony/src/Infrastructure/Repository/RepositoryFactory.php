@@ -12,6 +12,10 @@ use App\Exception\ClassNotFoundException;
 use App\Exception\InfrastructureAdapterException;
 use App\Infrastructure\InfrastructureRepositoryFactoryInterface;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\FileServicesGeneric;
+use App\Utils\Generic\HydratorServicesGeneric;
+use App\Utils\Generic\InMemoryDataServicesGeneric;
+use App\Utils\Generic\ObjectServicesGeneric;
 use Psr\Container\ContainerInterface;
 
 class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
@@ -160,12 +164,12 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 
             $repositoryClassName = "\App\Repository\InMemory\\".$this -> name."Repository";
 
-            $repository = new $repositoryClassName;
+            $repository = new $repositoryClassName( new InMemoryDataServicesGeneric( new FileServicesGeneric() ), new HydratorServicesGeneric( new ObjectServicesGeneric()) );
 
             return $this -> validationRepository( $repository );
 
         } catch( \Exception $e ) {
-            throw new InfrastructureAdapterException("Error occurred when obtain ".$this -> name." in memory repository");
+            throw new InfrastructureAdapterException("Error occurred when obtain ".$this -> name." in memory repository : ".$e -> getMessage() );
         }
 
     }

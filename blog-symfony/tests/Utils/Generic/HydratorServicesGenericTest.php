@@ -9,6 +9,7 @@
 namespace App\Tests\Utils\Generic;
 
 use App\Utils\Generic\HydratorServicesGeneric;
+use App\Utils\Generic\ObjectServicesGeneric;
 use PHPUnit\Framework\TestCase;
 
 class HydratorServicesGenericTest extends TestCase
@@ -17,7 +18,8 @@ class HydratorServicesGenericTest extends TestCase
     public function testShouldObtainAnErrorWhenEntityNotFound() {
         $this -> expectException("\App\Exception\EntityNotFoundException");
 
-        HydratorServicesGeneric::hydrate("UnitTest", [] );
+        $hydratorServices = new HydratorServicesGeneric( new ObjectServicesGeneric() );
+        $hydratorServices -> hydrate("UnitTest", [] );
     }
 
     public function testShouldObtainAValidUserEntityWithParameters() {
@@ -32,7 +34,8 @@ class HydratorServicesGenericTest extends TestCase
             "level"=> 2
         ];
 
-        $User = HydratorServicesGeneric::hydrate( "User", $parameters );
+        $hydratorServices = new HydratorServicesGeneric( new ObjectServicesGeneric() );
+        $User = $hydratorServices -> hydrate( "User", $parameters );
 
         $this -> assertInstanceOf("\App\Entity\User", $User);
         $this -> assertEquals( "contact@webmezenc.com", $User -> getEmail() );

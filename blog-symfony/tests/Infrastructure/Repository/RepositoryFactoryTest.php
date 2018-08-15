@@ -51,7 +51,7 @@ class RepositoryFactoryTest extends TestCase
 
     public function testObtainAInMemoryRepository() {
 
-        $inMemoryRepository = $this -> repositoryFactory -> create("Post","inMemory");
+        $inMemoryRepository = $this -> repositoryFactory -> create("User","inMemory");
 
         $this -> assertInstanceOf(RepositoryAdapterInterface::class, $inMemoryRepository );
 

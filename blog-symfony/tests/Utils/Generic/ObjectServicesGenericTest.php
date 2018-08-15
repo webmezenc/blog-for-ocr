@@ -19,11 +19,7 @@ class ObjectServicesGenericTest extends TestCase
 
     public function setUp() {
 
-        $this -> object = new \stdClass();
-        $this -> object -> name = "test";
-        $this -> object -> role = "unit test";
-        $this -> object -> setName = function(){};
-        $this -> object -> setRole = function(){};
+        $this -> object = new unitTest();
 
     }
 
@@ -40,6 +36,8 @@ class ObjectServicesGenericTest extends TestCase
     }
 
 
+
+
     public function testShouldObtainAValidSetter() {
         $this -> assertTrue( ObjectServicesGeneric::isSetter("name",$this -> object ) );
     }
@@ -53,4 +51,19 @@ class ObjectServicesGenericTest extends TestCase
     }
 
 
+}
+
+
+class unitTest {
+
+    private $name = "test";
+    private $role = "unit test";
+
+    public function setName( $name ) {
+        $this -> name = $name;
+    }
+
+    public function setRole( $role ) {
+        $this -> role = $role;
+    }
 }
