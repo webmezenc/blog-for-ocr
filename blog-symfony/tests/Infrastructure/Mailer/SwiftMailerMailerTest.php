@@ -13,6 +13,23 @@ use PHPUnit\Framework\TestCase;
 
 class SwiftMailerMailerTest extends TestCase
 {
+    /**
+     * @var SwiftMailerMailer
+     */
+    private $swiftMailer;
 
+    public function setUp() {
+        $transport = new \Swift_SendmailTransport();
+        $this -> swiftMailer = new SwiftMailerMailer( new \Swift_Mailer( $transport ) );
+    }
+
+    public function testShouldObtainErrorInSendingEmailWhenNoSpecifySender() {
+
+    }
+
+    public function testShouldObtainErrorWhenEmailInToIsInvalid() {
+        $this -> expectException("\App\Exception\EmailInvalidException");
+        $this -> swiftMailer -> addTo("contact_at_google.com");
+    }
 
 }

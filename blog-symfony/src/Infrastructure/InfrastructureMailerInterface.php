@@ -12,7 +12,7 @@ namespace App\Infrastructure;
 interface InfrastructureMailerInterface
 {
     public function addTo( string $email );
-    public function setSender( string $email );
+    public function setSender( string $email, string $name = null );
     public function setSubject( string $subject );
     public function setContent( string $content );
     public function setReplyTo( string $email );

@@ -9,7 +9,12 @@
 namespace App\Infrastructure\Mailer;
 
 
+use App\Entity\ValueObject\Author;
+use App\Entity\ValueObject\Mail;
 use App\Exception\EmailAlreadyDefinedException;
+use App\Exception\EmailInvalidParametersException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Mailer
 {
@@ -18,25 +23,52 @@ class Mailer
      */
     protected $to = [];
 
-    /**
-     * @var string
-     */
-    protected $sender;
 
     /**
-     * @var string
+     * @var ValidatorInterface
      */
-    protected $subject;
+    protected $validator;
+
 
     /**
-     * @var string
+     * Mailer constructor.
+     * @param ValidatorInterface $validator
      */
-    protected $content;
+    public function __construct( ValidatorInterface $validator )
+    {
+        $this -> validator = $validator;
+    }
+
 
     /**
-     * @var string
+     * @param array $to
+     * @param string $from
+     * @param string $subject
+     * @param string $content
+     * @param string|null $replyTo
+     *
+     * @return bool
+     *
+     * @throws EmailInvalidParametersException
      */
-    protected $replyTo;
+    public function rulesValidationInMailParameters( array $to, string $from, string $subject, string $content, string $replyTo = null ) {
+
+        $Mail = new Mail();
+        $Mail -> setReplyTo( $replyTo );
+        $Mail -> setSubject( $subject );
+        $Mail -> setFrom( $from );
+        $Mail -> setContent( $content );
+        $Mail -> setTo( $to );
+
+        $ValidationsRules = $this -> validator -> validate($Mail);
+
+        if( count($ValidationsRules) > 0 ) {
+            throw new EmailInvalidParametersException(count($ValidationsRules)." rules were not respected ");
+        }
+
+        return true;
+
+    }
 
 
     /**
@@ -53,6 +85,5 @@ class Mailer
         array_push($this -> to,$email);
 
     }
-
 
 }
