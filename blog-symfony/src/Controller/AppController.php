@@ -21,6 +21,7 @@ class AppController extends Controller
      */
     public function getResponseWithViewError( string $msg ): Response
     {
+
         return $this->render(
             'page/erreur-interne.html.twig', [
             'errorMSG' => $msg,
