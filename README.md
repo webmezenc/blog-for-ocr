@@ -1,3 +1,3 @@
 # blog-for-ocr
 
-This is a blog for OCR formation
+This is a blog for OCR
