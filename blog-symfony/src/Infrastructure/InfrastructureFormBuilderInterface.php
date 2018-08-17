@@ -9,9 +9,10 @@
 namespace App\Infrastructure;
 
 
-interface InfrastructureFormInterface
+interface InfrastructureFormBuilderInterface
 {
-    public function getForm( string $formName );
+    public function submitForm( array $formData );
+    public function getForm();
     public function getErrors();
     public function getView();
 }

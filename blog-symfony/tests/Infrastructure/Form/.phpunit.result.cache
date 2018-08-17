@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":204:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:39:"testShouldObtainAValidFormVisualisation";d:0.51;s:26:"testShouldObtainAValidForm";d:0.092;s:48:"testShouldObtainAnErrorWhenCreateFormDoesntExist";d:0.033;}}}
+C:30:"PHPUnit\Runner\TestResultCache":246:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:4:{s:28:"testShouldObtainAValidErrors";d:0.405;s:39:"testShouldObtainAValidFormVisualisation";d:0.1;s:26:"testShouldObtainAValidForm";d:0.051;s:48:"testShouldObtainAnErrorWhenCreateFormDoesntExist";d:0.03;}}}

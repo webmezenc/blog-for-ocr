@@ -8,10 +8,11 @@
 
 namespace App\Tests\Infrastructure\Form;
 
-use App\Infrastructure\Form\FormBuilderSymfonyForm;
+use App\Infrastructure\Form\FormBuilderSymfonyFormBuilder;
 use App\Tests\Infrastructure\Kernel\KernelFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class FormBuilderSymfonyFormTest extends TestCase
 {
@@ -26,10 +27,17 @@ class FormBuilderSymfonyFormTest extends TestCase
         $this -> container = $kernel -> getDic();
     }
 
+    public function testShouldObtainAValidErrors() {
+        $formBuilderSymfony = new FormBuilderSymfonyFormBuilder("RegisterUserType", $this -> container -> get("form.factory"), new Request() );
+        $Form = $formBuilderSymfony -> getForm();
+
+        $this -> assertInstanceOf("\Symfony\Component\Form\FormErrorIterator", $formBuilderSymfony -> getErrors() );
+    }
+
 
     public function testShouldObtainAValidFormVisualisation() {
-        $formBuilderSymfony = new FormBuilderSymfonyForm( $this -> container -> get("form.factory") );
-        $formBuilderSymfony -> getForm("RegisterUserType");
+        $formBuilderSymfony = new FormBuilderSymfonyFormBuilder("RegisterUserType", $this -> container -> get("form.factory"), new Request()  );
+        $Form = $formBuilderSymfony -> getForm();
 
         $this -> assertInstanceOf("Symfony\Component\Form\FormView",$formBuilderSymfony -> getView() );
 
@@ -37,14 +45,14 @@ class FormBuilderSymfonyFormTest extends TestCase
 
     public function testShouldObtainAValidForm() {
 
-        $formBuilderSymfony = new FormBuilderSymfonyForm( $this -> container -> get("form.factory") );
-        $this -> assertInstanceOf("\Symfony\Component\Form\FormInterface",$formBuilderSymfony -> getForm("RegisterUserType") );
+        $formBuilderSymfony = new FormBuilderSymfonyFormBuilder("RegisterUserType", $this -> container -> get("form.factory"), new Request()  );
+        $this -> assertInstanceOf("\Symfony\Component\Form\FormInterface",$formBuilderSymfony -> getForm() );
     }
 
     public function testShouldObtainAnErrorWhenCreateFormDoesntExist() {
         $this -> expectException("\App\Exception\FormNotFoundException");
 
-        $formBuilderSymfony = new FormBuilderSymfonyForm( $this -> container -> get("form.factory") );
-        $formBuilderSymfony -> getForm("UnitTestType");
+        $formBuilderSymfony = new FormBuilderSymfonyFormBuilder("UnitTestType", $this -> container -> get("form.factory"), new Request()  );
+        $formBuilderSymfony -> getForm();
     }
 }
