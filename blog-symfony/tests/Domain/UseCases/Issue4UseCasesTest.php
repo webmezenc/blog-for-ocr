@@ -33,7 +33,6 @@ class Issue4UseCasesTest extends TestCase
 
     }
 
-
     public function testShouldDisplayFormWhenFormIsSubmitedButInvalid() {
         $formFactory = new FormBuilderFactory( $this -> kernel -> getDic(), $this -> getRequestError() );
         $issue4UseCases = new Issue4UseCases( $formFactory -> create() );
@@ -51,8 +50,6 @@ class Issue4UseCasesTest extends TestCase
 
         $this -> assertArrayHasKey("view", $arrDataUseCase );
     }
-
-
 
     private function getRequestError(): Request {
         $Request = new Request();

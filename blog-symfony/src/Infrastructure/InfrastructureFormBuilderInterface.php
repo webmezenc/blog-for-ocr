@@ -15,4 +15,5 @@ interface InfrastructureFormBuilderInterface
     public function getForm();
     public function getErrors();
     public function getView();
+    public function getFormName(): string;
 }

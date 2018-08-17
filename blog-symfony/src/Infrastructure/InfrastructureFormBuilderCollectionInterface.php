@@ -11,7 +11,7 @@ namespace App\Infrastructure;
 
 interface InfrastructureFormBuilderCollectionInterface
 {
+    public function addForm( InfrastructureFormBuilderInterface $form );
     public function getForm( string $formName ): InfrastructureFormBuilderInterface;
-    public function getAll(): array;
-    public function setForm( string $formName, InfrastructureFormBuilderInterface $form );
+    public function getAllForms(): array;
 }

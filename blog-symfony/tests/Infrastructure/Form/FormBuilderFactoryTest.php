@@ -30,14 +30,14 @@ class FormBuilderFactoryTest extends TestCase
 
 
     public function testShouldObtainAValidFormBuilder() {
-        $formBuilderFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $this -> assertInstanceOf("\App\Infrastructure\InfrastructureFormBuilderInterface", $formBuilderFactory -> create("FormBuilderSymfony") );
+        $formBuilderFactory = new FormBuilderFactory(  $this -> container, new Request() );
+        $this -> assertInstanceOf("\App\Infrastructure\InfrastructureFormBuilderInterface", $formBuilderFactory -> create("RegisterUserType","FormBuilderSymfony") );
     }
 
     public function testShouldObtainAnErrorWhenFormBuilderIsntExist() {
         $this -> expectException("\App\Exception\FormNotFoundException");
 
         $formBuilderFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $formBuilderFactory -> create("unitTest");
+        $formBuilderFactory -> create("unitTest","unitTest");
     }
 }
