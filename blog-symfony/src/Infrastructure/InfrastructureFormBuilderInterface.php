@@ -16,4 +16,7 @@ interface InfrastructureFormBuilderInterface
     public function getErrors();
     public function getView();
     public function getFormName(): string;
+    public function isSubmitted(): bool;
+    public function isValid(): bool;
+    public function getData();
 }

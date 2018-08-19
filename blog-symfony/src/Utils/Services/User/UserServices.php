@@ -14,6 +14,7 @@ use App\Exception\EntityAlreadyExistException;
 use App\Exception\EntityNotFoundException;
 use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Repository\UserRepository;
+use Doctrine\ORM\ORMException;
 
 class UserServices
 {
@@ -46,8 +47,9 @@ class UserServices
 
             $this -> isRegistrable( $user );
 
-            return $this -> userRepository -> persist( $user );
+            return $this -> userRepository -> getEntityManager() -> persist( $user );
 
+        } catch( ORMException $e ) {
 
         } catch( EntityAlreadyExistException $e ) {
             throw $e;
@@ -72,6 +74,8 @@ class UserServices
             if( $User instanceof User ) {
                 throw new EntityAlreadyExistException("User identified by ".$user -> getEmail()." is already exist");
             }
+
+            return true;
 
         } catch( EntityNotFoundException $e ) {
             return true;

@@ -23,6 +23,7 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 
     const PROVIDER_LIST = ['doctrine',"inMemory"];
 
+
     /**
      * @var string
      */

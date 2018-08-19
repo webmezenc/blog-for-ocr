@@ -1,12 +1,31 @@
 {% extends "layout/base.html.twig" %}
 
+
+{% set msg = {
+    "alreadyRegistred" : "L'utilisateur est déjà enregistré",
+    "successfullRegistered": "L'utilisateur est enregistré avec succès",
+    "formIsInvalid": "Formulaire invalide"
+}
+%}
+
+
 {% block zonecontenu %}
-    <div class="alert alert-danger">
-        <p>
-            <b>Une erreur interne est survenue sur l'application</b>
-        </p>
-        <p class="text-center">
-            {{ errorMSG }}
-        </p>
-    </div>
+    <section class="msg-return">
+        {% if msgRegisterUser is defined %}
+            {% if msgRegisterUser == 'alreadyRegistred' or msgRegisterUser == 'formIsInvalid' %}
+                <div class="alert alert-danger">
+                    {{ msg[msgRegisterUser] }}
+                </div>
+            {% else %}
+                <div class="alert alert-success">
+                    {{ msg[msgRegisterUser] }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+    <section>
+        {{ form_start(view) }}
+            {{ form_widget(view) }}
+        {{ form_end(view) }}
+    </section>
 {% endblock %}

@@ -8,19 +8,38 @@
 
 namespace App\Domain\UseCases;
 
+use App\Entity\User;
+use App\Exception\EntityAlreadyExistException;
+use App\Infrastructure\InfrastructureFormBuilderCollectionInterface;
 use App\Infrastructure\InfrastructureFormBuilderInterface;
+use App\Utils\Services\User\UserServices;
 
 class Issue4UseCases implements UseCasesLogicInterface
 {
     /**
-     * @var InfrastructureFormBuilderInterface
+     * @var InfrastructureFormBuilderCollectionInterface
      */
-    private $formBuilder;
+    private $formBuilderCollection;
 
 
-    public function __construct( InfrastructureFormBuilderInterface $formBuilder )
+    /**
+     * @var UserServices
+     */
+    private $userServices;
+
+
+    public const SUCCESSFULL_REGISTERED = "successfullRegistered";
+
+    public const ALREADY_REGISTRED = "alreadyRegistred";
+
+    public const FORM_IS_INVALID = "formIsInvalid";
+
+
+
+    public function __construct(InfrastructureFormBuilderCollectionInterface $formBuilderCollection, UserServices $userServices )
     {
-        $this -> formBuilder = $formBuilder;
+        $this -> formBuilderCollection = $formBuilderCollection;
+        $this -> userServices = $userServices;
     }
 
 
@@ -28,19 +47,79 @@ class Issue4UseCases implements UseCasesLogicInterface
     public function process(): array
     {
         // TODO: Implement process() method.
-        $RegisterUserForm = $this -> formBuilder -> getForm("RegisterUserType");
+        $RegisterUserForm = $this -> formBuilderCollection -> getForm("RegisterUserType");
 
-        var_dump( $RegisterUserForm -> getData() );
+        return $this->executeActionwithFormState($RegisterUserForm);
+    }
 
+    /**
+     * @param $RegisterUserForm
+     * @return array
+     */
+    private function executeActionwithFormState($RegisterUserForm): array
+    {
 
-        if ($RegisterUserForm->isSubmitted() && !$RegisterUserForm->isValid()) {
-            return [
-                "view" => $this -> formBuilder -> getView($RegisterUserForm),
-                "formError" => "formIsInvalid"
-            ];
+        if ($RegisterUserForm->isSubmitted()) {
+
+            switch( $RegisterUserForm->isValid() ) {
+                case true:
+                    return $this -> registerUserFormIsValid($RegisterUserForm);
+                    break;
+                case false:
+                    return $this -> registerUserFormIsInvalid( $RegisterUserForm );
+                    break;
+            }
+
         }
 
-        return ["view" => $this -> formBuilder -> getView($RegisterUserForm) ];
+        return ["view" => $RegisterUserForm->getView()];
+    }
+
+
+    /**
+     * @param InfrastructureFormBuilderInterface $RegisterUserForm
+     * @return array
+     */
+    private function registerUserFormIsValid( $RegisterUserForm ) {
+
+        try {
+
+            return $this -> registerUser( $RegisterUserForm );
+
+        } catch( EntityAlreadyExistException $e ) {
+            return ["view" => $RegisterUserForm -> getView(), "msgRegisterUser" => self::ALREADY_REGISTRED];
+        }
+
+    }
+
+
+    /**
+     * @param InfrastructureFormBuilderInterface $RegisterUserForm
+     * @return array
+     *
+     * @throws EntityAlreadyExistException
+     */
+    private function registerUser($RegisterUserForm) {
+
+        $User = $RegisterUserForm -> getData();
+        $User -> setLevel( User::DEFAULT_LEVEL );
+        $User -> setState( User::DEFAULT_STATE );
+
+        $this -> userServices -> register( $User );
+
+        return ["msgRegisterUser" => self::SUCCESSFULL_REGISTERED];
+    }
+
+
+    /**
+     * @param $RegisterUserForm
+     * @return array
+     */
+    private function registerUserFormIsInvalid( $RegisterUserForm ) {
+        return [
+            "view" => $RegisterUserForm->getView(),
+            "msgRegisterUser" => self::FORM_IS_INVALID
+        ];
     }
 
 }

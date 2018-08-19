@@ -13,6 +13,7 @@ use App\Exception\InfrastructureAdapterException;
 use App\Infrastructure\InfrastructureMailerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MailerFactory
 {
@@ -66,14 +67,22 @@ class MailerFactory
      * @return LoggerMailer
      */
     private function getLoggerMailer(): LoggerMailer {
-        return new LoggerMailer( Validation::createValidator(), $this -> container -> get("logger.debug") );
+        return new LoggerMailer(  $this -> getValidator(), $this -> container -> get("logger.debug") );
     }
 
     /**
      * @return SwiftMailerMailer
      */
     private function getSwiftMailerMailer(): SwiftMailerMailer {
-        return new SwiftMailerMailer( Validation::createValidator(), $this -> container -> get("swiftmailer.mailer.default") );
+        return new SwiftMailerMailer( $this -> getValidator(), $this -> container -> get("swiftmailer.mailer.default") );
     }
 
+    /**
+     * @return ValidatorInterface
+     */
+    private function getValidator(): ValidatorInterface {
+        return Validation::createValidatorBuilder()
+                        ->enableAnnotationMapping()
+                        ->getValidator();
+    }
 }

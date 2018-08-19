@@ -52,6 +52,32 @@ class FormBuilderSymfonyFormBuilder implements InfrastructureFormBuilderInterfac
         $this -> form -> handleRequest( $request );
     }
 
+
+    /**
+     * @return bool
+     */
+    public function isSubmitted(): bool
+    {
+        return $this -> form -> isSubmitted();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this -> form -> isValid();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this -> form -> getData();
+    }
+
     /**
      * @return string
      */
