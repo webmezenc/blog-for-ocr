@@ -74,6 +74,12 @@ class MemoryRepository
     }
 
 
+    /**
+     *
+     */
+    public function flush() {
+
+    }
 
 
     /**

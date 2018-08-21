@@ -23,9 +23,11 @@
             {% endif %}
         {% endif %}
     </section>
-    <section>
-        {{ form_start(view) }}
-            {{ form_widget(view) }}
-        {{ form_end(view) }}
-    </section>
+    {% if view is defined %}
+        <section>
+            {{ form_start(view) }}
+                {{ form_widget(view) }}
+            {{ form_end(view) }}
+        </section>
+    {% endif %}
 {% endblock %}

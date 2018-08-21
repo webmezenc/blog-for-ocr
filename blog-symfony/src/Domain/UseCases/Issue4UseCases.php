@@ -12,6 +12,8 @@ use App\Entity\User;
 use App\Exception\EntityAlreadyExistException;
 use App\Infrastructure\InfrastructureFormBuilderCollectionInterface;
 use App\Infrastructure\InfrastructureFormBuilderInterface;
+use App\Infrastructure\InfrastructureMailerInterface;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Utils\Services\User\UserServices;
 
 class Issue4UseCases implements UseCasesLogicInterface
@@ -28,6 +30,18 @@ class Issue4UseCases implements UseCasesLogicInterface
     private $userServices;
 
 
+    /**
+     * @var RepositoryAdapterInterface
+     */
+    private $repository;
+
+
+    /**
+     * @var InfrastructureMailerInterface
+     */
+    private $mailer;
+
+
     public const SUCCESSFULL_REGISTERED = "successfullRegistered";
 
     public const ALREADY_REGISTRED = "alreadyRegistred";
@@ -36,10 +50,15 @@ class Issue4UseCases implements UseCasesLogicInterface
 
 
 
-    public function __construct(InfrastructureFormBuilderCollectionInterface $formBuilderCollection, UserServices $userServices )
+    public function __construct( InfrastructureFormBuilderCollectionInterface $formBuilderCollection,
+                                 UserServices $userServices,
+                                 RepositoryAdapterInterface $UserRepository,
+                                 InfrastructureMailerInterface $mailer )
     {
         $this -> formBuilderCollection = $formBuilderCollection;
         $this -> userServices = $userServices;
+        $this -> repository = $UserRepository;
+        $this -> mailer = $mailer;
     }
 
 
@@ -106,6 +125,11 @@ class Issue4UseCases implements UseCasesLogicInterface
         $User -> setState( User::DEFAULT_STATE );
 
         $this -> userServices -> register( $User );
+        $this -> repository -> flush();
+
+        // TODO - implémenter le mailer
+        //$this -> mailer ->
+
 
         return ["msgRegisterUser" => self::SUCCESSFULL_REGISTERED];
     }

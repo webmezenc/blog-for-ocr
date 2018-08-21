@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User
 {
 
-    const DEFAULT_STATE = 1;
+    const DEFAULT_STATE = 0;
     const DEFAULT_LEVEL = 1;
 
     /**

@@ -19,9 +19,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository  extends ServiceEntityRepository implements PostRepositoryAdapterInterface, RepositoryAdapterInterface
+class PostRepository extends Repository implements PostRepositoryAdapterInterface
 {
-    
+
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
@@ -52,7 +53,6 @@ class PostRepository  extends ServiceEntityRepository implements PostRepositoryA
         }
 
     }
-
 
     /**
      * @return int

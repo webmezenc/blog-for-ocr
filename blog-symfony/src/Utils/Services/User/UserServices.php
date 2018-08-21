@@ -36,6 +36,7 @@ class UserServices
 
     /**
      * @param User $user
+     * @param bool $persist
      *
      * @return User
      *
@@ -47,7 +48,7 @@ class UserServices
 
             $this -> isRegistrable( $user );
 
-            return $this -> userRepository -> getEntityManager() -> persist( $user );
+            return $this -> userRepository -> persist( $user );
 
         } catch( ORMException $e ) {
 

@@ -11,6 +11,7 @@ namespace App\Tests\Domain\UseCases;
 use App\Domain\UseCases\Issue4UseCases;
 use App\Infrastructure\Form\FormBuilderCollection;
 use App\Infrastructure\Form\FormBuilderFactory;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Infrastructure\Repository\RepositoryFactory;
 use App\Tests\Infrastructure\Kernel\KernelFactory;
 use App\Tests\Infrastructure\Kernel\SymfonyKernel;
@@ -43,6 +44,12 @@ class Issue4UseCasesTest extends TestCase
     private $container;
 
 
+    /**
+     * @var RepositoryAdapterInterface
+     */
+    private $userRepository;
+
+
 
     /**
      * @throws \App\Exception\FormBuilderIsAlreadyInCollectionException
@@ -66,8 +73,16 @@ class Issue4UseCasesTest extends TestCase
         $this -> formBuilderCollection = new FormBuilderCollection();
         $this -> formBuilderCollection -> addForm( $RegisterUserForm );
 
+        $this -> userRepository = $userRepository;
+
     }
 
+
+    public function testShouldAddUserAndSentEmailValidationButAnErrorOccurredWhenSentEmail() {
+        $this -> expectException("\App\Exception\EmailSendErrorException");
+
+
+    }
 
     public function testShouldVerifyUserAndUserIsRegistrable() {
 
@@ -81,7 +96,7 @@ class Issue4UseCasesTest extends TestCase
         );
 
 
-        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices );
+        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices, $this -> userRepository);
         $arrDataUseCase = $issue4UseCases -> process();
 
         $this -> assertEquals(Issue4UseCases::SUCCESSFULL_REGISTERED,$arrDataUseCase["msgRegisterUser"]);
@@ -102,7 +117,7 @@ class Issue4UseCasesTest extends TestCase
         );
 
 
-        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices );
+        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices, $this -> userRepository );
         $arrDataUseCase = $issue4UseCases -> process();
 
         $this -> assertArrayHasKey("msgRegisterUser", $arrDataUseCase );
@@ -119,7 +134,7 @@ class Issue4UseCasesTest extends TestCase
             ]
         );
 
-        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices  );
+        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices, $this -> userRepository  );
         $arrDataUseCase = $issue4UseCases -> process();
 
         $this -> assertArrayHasKey("view", $arrDataUseCase );
@@ -128,7 +143,7 @@ class Issue4UseCasesTest extends TestCase
 
     public function testShouldDisplayFormWhenUserIsntRegistred() {
 
-        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices  );
+        $issue4UseCases = new Issue4UseCases( $this -> formBuilderCollection, $this -> userServices, $this -> userRepository );
         $arrDataUseCase = $issue4UseCases -> process();
 
         $this -> assertArrayHasKey("view", $arrDataUseCase );

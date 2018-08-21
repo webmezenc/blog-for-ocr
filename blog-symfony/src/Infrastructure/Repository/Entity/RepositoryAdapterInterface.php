@@ -11,4 +11,5 @@ namespace App\Infrastructure\Repository\Entity;
 interface RepositoryAdapterInterface
 {
     public function persist( $entity );
+    public function flush();
 }

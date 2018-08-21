@@ -39,7 +39,7 @@ class RegisterUserController extends AppController
 
             $UserServices = new UserServices( $userRepository );
 
-            $issue4UseCases = new Issue4UseCases( $formBuilderCollection,$UserServices );
+            $issue4UseCases = new Issue4UseCases( $formBuilderCollection,$UserServices,$userRepository );
 
             return $this->render('page/register.html.twig', $issue4UseCases -> process() );
 
