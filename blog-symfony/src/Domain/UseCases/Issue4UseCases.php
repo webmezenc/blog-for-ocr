@@ -62,7 +62,9 @@ class Issue4UseCases implements UseCasesLogicInterface
     }
 
 
-
+    /**
+     * @return array
+     */
     public function process(): array
     {
         // TODO: Implement process() method.
@@ -145,5 +147,8 @@ class Issue4UseCases implements UseCasesLogicInterface
             "msgRegisterUser" => self::FORM_IS_INVALID
         ];
     }
+
+
+
 
 }

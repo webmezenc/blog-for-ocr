@@ -11,6 +11,8 @@ namespace App\Infrastructure\Mailer;
 
 use App\Exception\InfrastructureAdapterException;
 use App\Infrastructure\InfrastructureMailerInterface;
+use App\Infrastructure\InfrastructureRenderInterface;
+use App\Infrastructure\Render\RenderFactory;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -26,9 +28,25 @@ class MailerFactory
      */
     private $container;
 
+
+    /**
+     * @var InfrastructureRenderInterface
+     */
+    private $render;
+
+
+    /**
+     * MailerFactory constructor.
+     * @param ContainerInterface $container
+     * @throws InfrastructureAdapterException
+     */
+
     public function __construct( ContainerInterface $container )
     {
         $this -> container = $container;
+
+        $renderFactory = new RenderFactory( $container);
+        $this -> render = $renderFactory -> create();
     }
 
     /**
@@ -67,7 +85,7 @@ class MailerFactory
      * @return LoggerMailer
      */
     private function getLoggerMailer(): LoggerMailer {
-        return new LoggerMailer(  $this -> getValidator(), $this -> container -> get("logger.debug") );
+        return new LoggerMailer(  $this -> getValidator(), $this -> container -> get("logger.debug"),$this -> render );
     }
 
     /**

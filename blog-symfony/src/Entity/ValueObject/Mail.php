@@ -43,8 +43,6 @@ class Mail
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Type("string")
      */
     private $content;
 
@@ -114,9 +112,9 @@ class Mail
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -128,7 +126,6 @@ class Mail
     {
         $this->content = $content;
     }
-
 
 
 }

@@ -11,6 +11,7 @@ namespace App\Infrastructure\Mailer;
 
 use App\Exception\EmailSendErrorException;
 use App\Infrastructure\InfrastructureMailerInterface;
+use App\Infrastructure\InfrastructureRenderInterface;
 use App\Utils\Generic\EmailServicesGeneric;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -26,18 +27,20 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
      */
     private $message;
 
+
     /**
      * SwiftMailerMailer constructor.
      *
      * @param ValidatorInterface $validator
      * @param \Swift_Mailer $mailer
+     * @param InfrastructureRenderInterface $render
      */
-    public function __construct( ValidatorInterface  $validator, \Swift_Mailer $mailer )
+    public function __construct( ValidatorInterface  $validator, \Swift_Mailer $mailer, InfrastructureRenderInterface $render )
     {
         $this -> mailer = $mailer;
         $this -> message = new \Swift_Message();
 
-        parent::__construct( $validator );
+        parent::__construct( $validator,$render );
     }
 
     /**
@@ -96,8 +99,6 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
      */
     public function send(): bool
     {
-        //TODO - intégrer la méthode de validation des paramètres du mail
-
         if( $this -> mailer -> send( $this -> message ) === 0 ) {
             throw new EmailSendErrorException("An error has occurred when sent email");
         } else {

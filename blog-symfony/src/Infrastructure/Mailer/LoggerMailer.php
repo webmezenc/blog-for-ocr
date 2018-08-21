@@ -11,6 +11,7 @@ namespace App\Infrastructure\Mailer;
 
 use App\Entity\ValueObject\Mail;
 use App\Infrastructure\InfrastructureMailerInterface;
+use App\Infrastructure\InfrastructureRenderInterface;
 use App\Utils\Generic\EmailServicesGeneric;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -33,10 +34,11 @@ class LoggerMailer extends Mailer implements InfrastructureMailerInterface
      *
      * @param ValidatorInterface $validator
      * @param LoggerInterface $logger
+     * @param InfrastructureRenderInterface $render
      */
-    public function __construct(ValidatorInterface $validator, LoggerInterface $logger )
+    public function __construct(ValidatorInterface $validator, LoggerInterface $logger, InfrastructureRenderInterface $render )
     {
-        parent::__construct($validator);
+        parent::__construct($validator,$render);
         $this -> logger = $logger;
         $this -> mail = new Mail();
     }

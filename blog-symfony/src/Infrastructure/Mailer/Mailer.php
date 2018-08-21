@@ -13,11 +13,17 @@ use App\Entity\ValueObject\Author;
 use App\Entity\ValueObject\Mail;
 use App\Exception\EmailAlreadyDefinedException;
 use App\Exception\EmailInvalidParametersException;
+use App\Exception\EmailTemplateException;
+use App\Infrastructure\InfrastructureRenderInterface;
+use App\Utils\Generic\ObjectServicesGeneric;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Mailer
 {
+    const PATH_TEMPLATE_MAIL = "email";
+
+
     /**
      * @var array
      */
@@ -29,14 +35,20 @@ class Mailer
      */
     protected $validator;
 
+    /**
+     * @var InfrastructureRenderInterface
+     */
+    protected $render;
+
 
     /**
      * Mailer constructor.
      * @param ValidatorInterface $validator
      */
-    public function __construct( ValidatorInterface $validator )
+    public function __construct( ValidatorInterface $validator, InfrastructureRenderInterface $render )
     {
         $this -> validator = $validator;
+        $this -> render = $render;
     }
 
 
@@ -85,5 +97,29 @@ class Mailer
         array_push($this -> to,$email);
 
     }
+
+
+    /**
+     * @param string $templateName
+     * @param Mail $mail
+     *
+     * @return string
+     *
+     * @throws EmailTemplateException
+     */
+    public function getEmailTemplate(string $templateName, Mail $mail ): string {
+
+        try {
+
+            $params = ObjectServicesGeneric::getArrayFromObject( $mail );
+            return $this -> render -> renderView(self::PATH_TEMPLATE_MAIL."/".$templateName, ["mail" => $params] );
+
+        } catch( \Exception $e ) {
+            throw new EmailTemplateException("An error has occurred during render template : ".$e -> getMessage());
+        }
+
+    }
+
+
 
 }

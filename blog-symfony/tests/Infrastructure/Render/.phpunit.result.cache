@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":287:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:4:{s:44:"testShouldRenderViewAndViewIsCorrectlyRender";d:0.337;s:45:"testShouldRenderViewButViewContainErrorParams";d:0.064;s:54:"testShouldRenderViewButTemplateContainParamsNotDefined";d:0.03;s:37:"testShouldRenderViewButViewIsNotFound";d:0.025;}}}
+C:30:"PHPUnit\Runner\TestResultCache":162:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:42:"testShouldObtainTwigRenderAndRenderIsValid";d:10.43;s:44:"testShouldObtainRenderButRenderIsntSupported";d:0.063;}}}

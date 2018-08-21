@@ -14,6 +14,7 @@
         <env name="APP_DEBUG" value="1" />
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
+        <env name="MAILER_URL" value="smtp://127.0.0.1:1025" />
         <env name="DATABASE_URL" value="mysql://root@127.0.0.1:3306/blog_ocr" />
         <!-- define your env variables for the test env here -->
     </php>

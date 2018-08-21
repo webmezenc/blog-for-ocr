@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    email:
+      from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
 
 services:
     # default configuration for services in *this* file
