@@ -16,6 +16,7 @@ use App\Infrastructure\InfrastructureFormBuilderInterface;
 use App\Infrastructure\InfrastructureMailerInterface;
 use App\Infrastructure\Mailer\Mailer;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\EncryptionServicesGeneric;
 use App\Utils\Services\User\UserServices;
 
 class Issue4UseCases implements UseCasesLogicInterface
@@ -129,12 +130,28 @@ class Issue4UseCases implements UseCasesLogicInterface
         $User -> setLevel( User::DEFAULT_LEVEL );
         $User -> setState( User::DEFAULT_STATE );
 
+        $User = $this -> encryptPassword( $User );
+
         $this -> userServices -> register( $User );
         $this -> repository -> flush();
 
         $this -> sendEmailConfirmationRegister( $User );
 
         return ["msgRegisterUser" => self::SUCCESSFULL_REGISTERED];
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return User
+     */
+    private function encryptPassword( User $user ): User {
+        $password = $user -> getPassword();
+        $hash = EncryptionServicesGeneric::passwordEncrypt($password);
+
+        $user -> setPassword( $hash );
+
+        return $user;
     }
 
 
