@@ -1,0 +1,23 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block zonecontenu %}
+    <section>
+        <div class="row">
+            <div class="col-sm-9 col-xs-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-right">
+               Publié le {{ dateCreate|date("H:i d-m-Y") }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                {{ content|raw }}
+            </div>
+        </div>
+    </section>
+{%  endblock %}

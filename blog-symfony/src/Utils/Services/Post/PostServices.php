@@ -9,10 +9,12 @@
 namespace App\Utils\Services\Post;
 
 
+use App\Entity\Post;
 use App\Entity\ValueObject\OrderLimit;
 use App\Exception\PostServicesException;
 use App\Repository\PostRepository;
-use PHPUnit\Runner\Exception;
+use App\Exception\EntityNotFoundException;
+use App\Exception\InvalidStateException;
 
 class PostServices
 {
@@ -25,6 +27,32 @@ class PostServices
     public function __construct( PostRepository $postRepository )
     {
         $this -> postRepository = $postRepository;
+    }
+
+
+    /**
+     * @param string $slug
+     *
+     * @return Post
+     *
+     * @throws EntityNotFoundException
+     * @throws InvalidStateException
+     */
+    public function getPublishPostBySlug( string $slug ): Post
+    {
+
+        $findPost = $this -> postRepository -> findOneBy( array( "slug" => $slug ));
+
+        if( is_null($findPost) ) {
+            throw new EntityNotFoundException("Post identified by ".$slug." isn't found");
+        }
+
+        if( $findPost -> getState() !== Post::POST_PUBLISHED ) {
+            throw new InvalidStateException("This post isn't published");
+        }
+
+        return $findPost;
+
     }
 
 

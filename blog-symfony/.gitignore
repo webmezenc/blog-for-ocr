@@ -19,5 +19,7 @@
 /phpunit.xml
 ###< phpunit/phpunit ###
 
-### Node ###
+### Node and others ###
 /node_modules/
+/bin/
+/public/assets/vendor/

@@ -11,10 +11,22 @@ gulp.task('default', function() {
     const bootstrapjs = gulp.src('node_modules/bootstrap/dist/js/*.js')
         .pipe( gulp.dest('public/assets/js/') );
 
+    const bootstrapui = gulp.src('node_modules/bootstrap-ui/dist/css/*.css')
+        .pipe( gulp.dest('public/assets/css/') );
+
+    const bootstrapuijs = gulp.src('node_modules/bootstrap-ui/dist/js/*.js')
+        .pipe( gulp.dest('public/assets/js/') );
+
     const jquery = gulp.src('node_modules/jquery/dist/*.js')
         .pipe( gulp.dest('public/assets/js/') );
 
-    return merge( bootstrap,bootstrapjs,jquery );
+    const fontawesome = gulp.src('node_modules/@fortawesome/fontawesome-free/css/all.*')
+        .pipe( gulp.dest('public/assets/css/fontawesome/') );
+
+    const fontawesomewebfonts = gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
+        .pipe( gulp.dest('public/assets/css/webfonts/') );
+
+    return merge( bootstrap,bootstrapjs,bootstrapui,bootstrapuijs,jquery,fontawesome,fontawesomewebfonts );
 
 });
 

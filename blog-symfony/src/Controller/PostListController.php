@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Exception\PostServicesException;
 use App\Utils\Services\Post\PostServices;
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +17,7 @@ class PostListController extends AppController
      */
     public function index()
     {
-       return $this -> createPagePostList(0,10);
+       return $this -> processController( array($this,'createPagePostList'), array(0,10) );
     }
 
 
@@ -26,7 +28,7 @@ class PostListController extends AppController
     {
         $start = $pageNumber * 10;
 
-        return $this -> createPagePostList( $start,10, $pageNumber );
+        return $this -> processController( array($this,'createPagePostList'), array($start,10,$pageNumber) );
     }
 
 
@@ -35,26 +37,22 @@ class PostListController extends AppController
      * @param int $numberPost
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws PostServicesException
      */
-    private function createPagePostList( int $start, int $numberPost, int $actualPage = 0 ): Response
+    public function createPagePostList( int $start, int $numberPost, int $actualPage = 0 ): Response
     {
 
         $PostRepository = $this -> getDoctrine() -> getRepository(Post::class);
         $PostServices = new PostServices( $PostRepository );
 
-        try {
+        $postList = $PostServices -> getListPost($start,$numberPost );
 
-            $postList = $PostServices -> getListPost($start,$numberPost );
-
-            return $this->render('page/post-list.html.twig', [
-                'postList' => $postList,
-                'postNumber' => $PostRepository -> getNumberOfValidPost(),
-                'actualPage' => $actualPage
-            ]);
-
-        } catch( \Exception $e ) {
-            return $this -> getResponseWithViewError( $e -> getMessage() );
-        }
+        return $this->render('page/post-list.html.twig', [
+            'postList' => $postList,
+            'postNumber' => $PostRepository -> getNumberOfValidPost(),
+            'actualPage' => $actualPage
+        ]);
 
     }
 

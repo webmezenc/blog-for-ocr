@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "firstname": "Jérémy",
+    "lastname": "Gaultier",
+    "email": "contact@webmezenc.com",
+    "password": "empty",
+    "state": 1,
+    "level": 2
+  },
+  {
+    "id": 2,
+    "firstname": "Unit",
+    "lastname": "Test",
+    "email": "contactunittest@webmezenc.com",
+    "password": "empty",
+    "state": 1,
+    "level": 2
+  }
+]

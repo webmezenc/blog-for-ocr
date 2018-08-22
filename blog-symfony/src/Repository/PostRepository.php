@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Post;
 use App\Entity\ValueObject\OrderLimit;
 use App\Exception\StringNotFoundException;
+use App\Infrastructure\Repository\Entity\PostRepositoryAdapterInterface;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Utils\Generic\SqlServicesGeneric;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -17,8 +19,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+class PostRepository extends Repository implements PostRepositoryAdapterInterface
 {
+
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
@@ -49,7 +53,6 @@ class PostRepository extends ServiceEntityRepository
         }
 
     }
-
 
     /**
      * @return int
