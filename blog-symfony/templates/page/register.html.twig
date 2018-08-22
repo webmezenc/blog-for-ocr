@@ -2,16 +2,24 @@
 
 
 {% set msg = {
-    "alreadyRegistred" : "L'utilisateur est déjà enregistré",
-    "successfullRegistered": "L'utilisateur est enregistré avec succès",
+    "alreadyRegistred" : "Cette adresse email est déjà enregistrée, veuillez en choisir une autre",
+    "successfullRegistered": "Votre inscription a été enregistrée avec succès, un email vous a été envoyé. La validation de votre compte s'effectuera sous 48 heures.",
     "formIsInvalid": "Formulaire invalide"
 }
 %}
 
 
 {% block zonecontenu %}
-    <section class="msg-return">
-        {% if msgRegisterUser is defined %}
+    <section class="alert alert-info">
+        <p> <b>Inscrivez-vous sur le blog, c'est gratuit !</b> </p>
+        <p>L'inscription sur le blog vous permet de : </p>
+        <ul>
+            <li>poster des commentaires</li>
+            <li>recevoir nos newsletters</li>
+        </ul>
+    </section>
+    {% if msgRegisterUser is defined %}
+    <div class="msg-return">
             {% if msgRegisterUser == 'alreadyRegistred' or msgRegisterUser == 'formIsInvalid' %}
                 <div class="alert alert-danger">
                     {{ msg[msgRegisterUser] }}
@@ -21,13 +29,14 @@
                     {{ msg[msgRegisterUser] }}
                 </div>
             {% endif %}
-        {% endif %}
-    </section>
+    </div>
+    {% endif %}
     {% if view is defined %}
-        <section>
+        {% form_theme view 'bootstrap_4_layout.html.twig' %}
+        <div>
             {{ form_start(view) }}
                 {{ form_widget(view) }}
             {{ form_end(view) }}
-        </section>
+        </div>
     {% endif %}
 {% endblock %}

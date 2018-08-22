@@ -9,10 +9,12 @@
 namespace App\Domain\UseCases;
 
 use App\Entity\User;
+use App\Entity\ValueObject\Mail;
 use App\Exception\EntityAlreadyExistException;
 use App\Infrastructure\InfrastructureFormBuilderCollectionInterface;
 use App\Infrastructure\InfrastructureFormBuilderInterface;
 use App\Infrastructure\InfrastructureMailerInterface;
+use App\Infrastructure\Mailer\Mailer;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Utils\Services\User\UserServices;
 
@@ -48,6 +50,8 @@ class Issue4UseCases implements UseCasesLogicInterface
 
     public const FORM_IS_INVALID = "formIsInvalid";
 
+    public const TITLE_EMAIL_CONFIRMAION_INSCRIPTION = "Confirmation de l'inscription";
+
 
 
     public function __construct( InfrastructureFormBuilderCollectionInterface $formBuilderCollection,
@@ -67,7 +71,6 @@ class Issue4UseCases implements UseCasesLogicInterface
      */
     public function process(): array
     {
-        // TODO: Implement process() method.
         $RegisterUserForm = $this -> formBuilderCollection -> getForm("RegisterUserType");
 
         return $this->executeActionwithFormState($RegisterUserForm);
@@ -129,11 +132,26 @@ class Issue4UseCases implements UseCasesLogicInterface
         $this -> userServices -> register( $User );
         $this -> repository -> flush();
 
-        // TODO - implémenter le mailer
-        //$this -> mailer ->
-
+        $this -> sendEmailConfirmationRegister( $User );
 
         return ["msgRegisterUser" => self::SUCCESSFULL_REGISTERED];
+    }
+
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    private function sendEmailConfirmationRegister( User $user ): bool {
+
+        $this -> mailer -> setSubject(self::TITLE_EMAIL_CONFIRMAION_INSCRIPTION );
+        $this -> mailer -> addTo( $user -> getEmail() );
+        $this -> mailer -> setSender( Mailer::DEFAULT_SENT_EMAIL, Mailer::DEFAULT_SENT_NAME );
+        $this -> mailer -> setReplyTo( Mailer::DEFAULT_REPLYTO_EMAIL );
+        $this -> mailer -> setContent( $this->obtainEmailTemplate() );
+        return $this -> mailer -> send();
+
     }
 
 
@@ -148,7 +166,14 @@ class Issue4UseCases implements UseCasesLogicInterface
         ];
     }
 
-
+    /**
+     * @return string
+     */
+    private function obtainEmailTemplate(): string
+    {
+        $templateMail = $this->mailer->getEmailTemplate("validationemail.html.twig", $this->mailer->getMailValueObject());
+        return $templateMail;
+    }
 
 
 }

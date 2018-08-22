@@ -6,6 +6,7 @@ use App\Domain\UseCases\Issue3UseCases;
 use App\Domain\UseCases\Issue4UseCases;
 use App\Infrastructure\Form\FormBuilderCollection;
 use App\Infrastructure\Form\FormBuilderFactory;
+use App\Infrastructure\Mailer\MailerFactory;
 use App\Infrastructure\Repository\RepositoryFactory;
 use App\Infrastructure\Request\RequestFactory;
 use App\Utils\Generic\ParametersBag;
@@ -39,7 +40,9 @@ class RegisterUserController extends AppController
 
             $UserServices = new UserServices( $userRepository );
 
-            $issue4UseCases = new Issue4UseCases( $formBuilderCollection,$UserServices,$userRepository );
+            $MailerFactory = new MailerFactory($container);
+
+            $issue4UseCases = new Issue4UseCases( $formBuilderCollection,$UserServices,$userRepository,$MailerFactory -> create() );
 
             return $this->render('page/register.html.twig', $issue4UseCases -> process() );
 

@@ -20,11 +20,6 @@ class LoggerMailer extends Mailer implements InfrastructureMailerInterface
 {
 
     /**
-     * @var Mail
-     */
-    private $mail;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;

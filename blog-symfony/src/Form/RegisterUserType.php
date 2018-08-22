@@ -20,7 +20,9 @@ class RegisterUserType extends AbstractType
             ->add('lastname', TextType::class, ['required' => true])
             ->add('email', EmailType::class, ['required' => true])
             ->add('password', PasswordType::class, ['required' => true])
-            ->add('Inscription', SubmitType::class )
+            ->add('Inscription au blog', SubmitType::class, [
+                'attr' => array('class' => 'btn-block font-weight-bold')
+            ] )
         ;
     }
 

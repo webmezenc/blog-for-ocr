@@ -9,26 +9,30 @@
 namespace App\Infrastructure\Mailer;
 
 
-use App\Entity\ValueObject\Author;
 use App\Entity\ValueObject\Mail;
 use App\Exception\EmailAlreadyDefinedException;
 use App\Exception\EmailInvalidParametersException;
 use App\Exception\EmailTemplateException;
 use App\Infrastructure\InfrastructureRenderInterface;
 use App\Utils\Generic\ObjectServicesGeneric;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Mailer
 {
     const PATH_TEMPLATE_MAIL = "email";
-
+    const DEFAULT_SENT_EMAIL = "ba729208b7-aad1bd@inbox.mailtrap.io";
+    const DEFAULT_SENT_NAME = "No-reply BlogOCR";
+    const DEFAULT_REPLYTO_EMAIL = "contact@blogocr.com";
 
     /**
      * @var array
      */
     protected $to = [];
 
+    /**
+     * @var Mail
+     */
+    protected $mail;
 
     /**
      * @var ValidatorInterface
@@ -49,6 +53,7 @@ class Mailer
     {
         $this -> validator = $validator;
         $this -> render = $render;
+        $this -> mail = new Mail();
     }
 
 
@@ -120,6 +125,14 @@ class Mailer
 
     }
 
+
+    /**
+     * @return Mail
+     */
+    public function getMailValueObject(): Mail
+    {
+        return $this -> mail;
+    }
 
 
 }

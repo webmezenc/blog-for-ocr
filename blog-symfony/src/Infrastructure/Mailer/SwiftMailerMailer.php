@@ -9,6 +9,7 @@
 namespace App\Infrastructure\Mailer;
 
 
+use App\Entity\ValueObject\Mail;
 use App\Exception\EmailSendErrorException;
 use App\Infrastructure\InfrastructureMailerInterface;
 use App\Infrastructure\InfrastructureRenderInterface;
@@ -27,7 +28,6 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
      */
     private $message;
 
-
     /**
      * SwiftMailerMailer constructor.
      *
@@ -37,6 +37,7 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
      */
     public function __construct( ValidatorInterface  $validator, \Swift_Mailer $mailer, InfrastructureRenderInterface $render )
     {
+        $this -> mail = new Mail();
         $this -> mailer = $mailer;
         $this -> message = new \Swift_Message();
 
@@ -52,6 +53,9 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
     {
         EmailServicesGeneric::validateEmail($email);
         $this -> message -> addTo( $email );
+
+
+        $this -> mail -> setTo( array_merge($this -> mail -> getTo(),[$email]) );
     }
 
     /**
@@ -64,6 +68,7 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
     {
         EmailServicesGeneric::validateEmail($email);
         $this -> message -> setFrom( $email, $name );
+        $this -> mail -> setFrom( $email );
     }
 
     /**
@@ -72,6 +77,7 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
     public function setSubject(string $subject)
     {
         $this -> message -> setSubject($subject);
+        $this -> mail -> setSubject( $subject );
     }
 
     /**
@@ -89,6 +95,7 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
     public function setReplyTo(string $email)
     {
         $this -> message -> setReplyTo( $email );
+        $this -> mail -> setReplyTo( $email );
     }
 
 
@@ -105,9 +112,6 @@ class SwiftMailerMailer extends Mailer implements InfrastructureMailerInterface
             return true;
         }
     }
-
-
-
 
 
 }
