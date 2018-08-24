@@ -1,0 +1,9 @@
+{% if app.user is not null %}
+
+{% else %}
+    <div class="alert alert-warning">
+        <p>
+            L'<b>authentification est requise</b> pour pouvoir commenter un article, veuillez <a href="/login">vous authentifier</a> ou <a href="/register">vous inscrire</a>.
+        </p>
+    </div>
+{% endif %}
