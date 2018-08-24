@@ -1,4 +1,9 @@
 # See https://symfony.com/doc/current/email/dev_environment.html
 swiftmailer:
-    # send all emails to a specific address
-    #delivery_addresses: ['me@example.com']
+  spool:     { type: memory }
+  transport: smtp
+  host:      smtp.mailtrap.io
+  username:  63e2506afbcd23
+  password:  2f8de9a7aa63ce
+  auth_mode: cram-md5
+  port: 2525

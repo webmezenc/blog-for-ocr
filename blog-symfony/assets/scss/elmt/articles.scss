@@ -1,0 +1,24 @@
+.elmt-articles {
+  .nav-menu {
+    a {
+      background: #18BC9C;
+      color: white;
+      padding: 5px;
+
+      &:hover {
+        background: #18BC9A;
+        color: white;
+      }
+    }
+
+    .selected {
+      background: white;
+      color: #18BC9C;
+      &:hover {
+        background: inherit;
+        color: inherit;
+        cursor: initial;
+      }
+    }
+  }
+}

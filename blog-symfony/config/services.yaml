@@ -5,6 +5,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    email:
+      from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
+    repositoryProvider: 'doctrine'
+
 
 services:
     # default configuration for services in *this* file
@@ -21,6 +25,10 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+    App\Repository\Repository:
+        autowire: false
+        public: false
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
@@ -29,3 +37,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    #Providers
+    bloguserprovider:
+        class: '\App\Security\User\BlogUserProvider'
+        arguments: ['@service_container']
+
+
+    #Public services
+    logger.debug:
+        public: true
+        alias: 'monolog.logger.debug'
+
+    generator.csrf:
+        public: true
+        alias: 'security.csrf.token_generator'

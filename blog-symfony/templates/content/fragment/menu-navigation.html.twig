@@ -1,0 +1,2 @@
+{% set className = isActualPage == true ? "class=' selected'": "" %}
+<a href="{{ slug }}/{{ page }}" {{ className|raw }}>{{ page }}</a>

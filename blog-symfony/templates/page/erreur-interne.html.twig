@@ -1,0 +1,12 @@
+{% extends "layout/base.html.twig" %}
+
+{% block zonecontenu %}
+    <div class="alert alert-danger">
+        <p>
+            <b>Une erreur interne est survenue sur l'application</b>
+        </p>
+        <p class="text-center">
+            {{ errorMSG }}
+        </p>
+    </div>
+{% endblock %}

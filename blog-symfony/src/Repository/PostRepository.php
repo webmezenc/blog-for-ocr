@@ -3,7 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\ValueObject\OrderLimit;
+use App\Exception\StringNotFoundException;
+use App\Infrastructure\Repository\Entity\PostRepositoryAdapterInterface;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\SqlServicesGeneric;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -12,39 +19,77 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+class PostRepository extends Repository implements PostRepositoryAdapterInterface
 {
+
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
     }
 
-//    /**
-//     * @return Post[] Returns an array of Post objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Post
+    /**
+     * @param OrderLimit $orderLimit
+     *
+     * @return array
+     *
+     * @throws StringNotFoundException
+     */
+    public function getValidPostWithOrderAndLimit( OrderLimit $orderLimit ): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+        try {
+
+            $queryBuilder = $this -> getQueryBuilderWithOrderLimitApplied( $orderLimit );
+            $query = $queryBuilder
+                          -> andWhere( "p.state = 1" )
+                          -> getQuery();
+
+            return $query -> getArrayResult();
+
+        } catch( StringNotFoundException $e ) {
+            throw $e;
+        }
+
     }
-    */
+
+    /**
+     * @return int
+     */
+    public function getNumberOfValidPost(): int
+    {
+
+        return $this -> createQueryBuilder("p")
+                     -> select('COUNT(p)')
+                     -> andWhere( "p.state = 1" )
+                     -> getQuery()
+                     -> getSingleScalarResult();
+
+    }
+
+
+    /**
+     * @param OrderLimit $orderLimit
+     *
+     * @return QueryBuilder
+     *
+     * @throws StringNotFoundException
+     */
+    private function getQueryBuilderWithOrderLimitApplied( OrderLimit $orderLimit ): QueryBuilder
+    {
+        try {
+
+            SqlServicesGeneric::isValidOrder( $orderLimit -> getOrder() );
+
+            return $this -> createQueryBuilder( "p" )
+                -> setFirstResult( $orderLimit -> getStart() )
+                -> setMaxResults( $orderLimit -> getEnd() )
+                -> orderBy( "p.id", $orderLimit -> getOrder() );
+
+        } catch( StringNotFoundException $e ) {
+            throw $e;
+        }
+    }
+
 }

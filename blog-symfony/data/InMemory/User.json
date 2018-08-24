@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "firstname": "Jérémy",
+    "lastname": "Gaultier",
+    "email": "contact@webmezenc.com",
+    "password": "$2y$10$Yb1mYWn8mCA3/hAgimK7CuLy2GVfxT.F6V1fbEYtYOEwMrDAFLkAa",
+    "state": 1,
+    "level": 1
+  },
+  {
+    "id": 2,
+    "firstname": "Unit",
+    "lastname": "Test",
+    "email": "contactunittest@webmezenc.com",
+    "password": "$2y$10$Yb1mYWn8mCA3/hAgimK7CuLy2GVfxT.F6V1fbEYtYOEwMrDAFLkAa",
+    "state": 1,
+    "level": 2
+  }
+]
