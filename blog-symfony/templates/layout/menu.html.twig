@@ -12,8 +12,19 @@
         <a href="#contact">Contact</a>
     </li>
     <li class="page-scroll">
-        <a href="/register" data-toggle="tooltip" data-placement="bottom" title="Inscrivez-vous sur le blog">
+        <a href="/register" data-toggle="tooltip" data-placement="bottom" title="S'inscrire au blog">
             <i class="fas fa-user-edit"></i>
         </a>
+    </li>
+    <li class="page-scroll">
+        {% if app.user is null %}
+            <a href="/login" data-toggle="tooltip" data-placement="bottom" title="Se connecter au blog">
+                <i class="fas fa-sign-in-alt"></i>
+            </a>
+        {% else %}
+            <a href="/logout" data-toggle="tooltip" data-placement="bottom" title="Se déconnecter du blog">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        {% endif %}
     </li>
 </ul>

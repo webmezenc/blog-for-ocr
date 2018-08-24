@@ -20,7 +20,7 @@ class EncryptionServicesGeneric
      * @return bool
      */
     static public function verifyPassword(string $hash, string $password): bool {
-        return $hash === self::passwordEncrypt($password);
+        return password_verify($password,$hash);
     }
 
     /**
@@ -28,6 +28,6 @@ class EncryptionServicesGeneric
      * @return string
      */
     static public function passwordEncrypt(string $password) {
-        return hash("sha256", $password);
+        return password_hash($password,PASSWORD_DEFAULT);
     }
 }
