@@ -1,0 +1,30 @@
+{% extends "layout/base.html.twig" %}
+
+
+{% block zonecontenu %}
+    <section>
+        {#
+        {% if msg is defined %}
+            <div class="msg-return">
+                {% if msg == 'userLoginInformationsIsntValid' %}
+                    <div class="alert alert-danger">
+                        {{ msgMapping[msg] }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success">
+                        {{ msgMapping[msg] }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if form is defined %}
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %} #}
+        {% include("page/elmt/form-login.html.twig") %}
+    </section>
+{% endblock %}

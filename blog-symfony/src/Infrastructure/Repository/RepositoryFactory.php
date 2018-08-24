@@ -55,6 +55,8 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
      * @param string $name
      * @param string $provider
      *
+     * @return RepositoryAdapterInterface
+     *
      * @throws InfrastructureAdapterException
      */
     public function create(string $name, string $provider = "doctrine")
@@ -78,6 +80,8 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 
     /**
      * @param string $provider
+     *
+     * @return RepositoryAdapterInterface
      *
      * @throws InfrastructureAdapterException
      */

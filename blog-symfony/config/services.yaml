@@ -7,6 +7,8 @@ parameters:
     locale: 'en'
     email:
       from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
+    repositoryProvider: 'doctrine'
+
 
 services:
     # default configuration for services in *this* file
@@ -36,6 +38,13 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    #Providers
+    bloguserprovider:
+        class: '\App\Security\User\BlogUserProvider'
+        arguments: ['@service_container']
+
+
+    #Public services
     logger.debug:
         public: true
         alias: 'monolog.logger.debug'
