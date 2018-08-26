@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FormBuilderFactory
 {
     const FORM_BUILDER = ['FormBuilderSymfony'];
-
+    const DEFAULT_BUILDER = 'FormBuilderSymfony';
 
     /**
      * @var ContainerInterface
@@ -49,7 +49,7 @@ class FormBuilderFactory
      *
      * @throws FormNotFoundException
      */
-    public function create( string $formName, string $formBuilderName = 'FormBuilderSymfony' ): InfrastructureFormBuilderInterface {
+    public function create( string $formName, string $formBuilderName = self::DEFAULT_BUILDER ): InfrastructureFormBuilderInterface {
 
         if( !in_array($formBuilderName,self::FORM_BUILDER) ) {
             throw new FormNotFoundException("The form ".$formBuilderName." isn't found");

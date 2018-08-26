@@ -112,7 +112,7 @@ class FormBuilderSymfonyFormBuilder implements InfrastructureFormBuilderInterfac
     {
         $this -> validityFormInstance( $this -> form );
 
-        return $this -> form  -> getErrors();
+        return $this -> form  -> getErrors(true);
     }
 
 

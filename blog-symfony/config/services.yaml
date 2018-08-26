@@ -48,7 +48,9 @@ services:
     logger.debug:
         public: true
         alias: 'monolog.logger.debug'
-
+    security.user:
+        public: true
+        alias: 'security.helper'
     generator.csrf:
         public: true
         alias: 'security.csrf.token_generator'

@@ -24,6 +24,7 @@ class AddCommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'csrf_protection' => false,
             'data_class' => Comments::class,
         ]);
     }
