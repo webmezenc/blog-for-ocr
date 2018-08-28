@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentsRepository")
@@ -28,6 +30,9 @@ class Comments
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=100,minMessage="Le commentaire doit contenir au moins 100 caractères")
+     * @Assert\Regex(pattern="/([a-zA-Z]*@[a-zA-Z]*\.[a-zA-Z]*)/",match=false,message="Le commentaire ne doit pas contenir d'adresse email")
+     * @Assert\Regex(pattern="/http:\/\/[a-zA-Z]*\.[a-zA-Z]*\//", match=false,message="Le commentaire ne doit pas contenir d'URL")
      */
     private $content;
 

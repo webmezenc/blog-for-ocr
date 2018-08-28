@@ -1,0 +1,28 @@
+<section>
+    <h5>Ajouter un commentaire</h5>
+
+    {% if msg is defined and msg == 'CommentSuccessfullyAdded' %}
+        <div class="alert alert-success">
+            <p>Le commentaire a été ajouté avec succès, celui-ci sera validé dans les plus brefs délais.</p>
+        </div>
+    {% endif %}
+
+    {% if app.user is not null and form is defined %}
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+        <div class="alert alert-info">
+            <p>Pour ajouter un commentaire, utilisez le formulaire disponible ci-dessous.
+                L'ensemble des commentaires sont soumis à validation avant publication.</p>
+        </div>
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    {% elseif app.user is null %}
+        <div class="alert alert-warning">
+            <p>
+                L'<b>authentification est requise</b> pour pouvoir commenter un article, veuillez <a href="/login">vous authentifier</a> ou <a href="/register">vous inscrire</a>.
+            </p>
+        </div>
+    {% endif %}
+</section>

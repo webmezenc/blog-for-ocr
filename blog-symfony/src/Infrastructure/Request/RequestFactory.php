@@ -16,14 +16,14 @@ class RequestFactory
 {
 
     const PROVIDER_LIST = ['HttpFoundation'];
-
+    const DEFAULT_PROVIDER = 'HttpFoundation';
 
     /**
      * @param string $provider
      *
      * @return InfrastructureRequestInterface
      */
-    static public function create( string $provider = 'HttpFoundation'): InfrastructureRequestInterface {
+    static public function create( string $provider = self::DEFAULT_PROVIDER): InfrastructureRequestInterface {
         return self::getHttpFoundation();
     }
 
