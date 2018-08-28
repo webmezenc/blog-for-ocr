@@ -8,7 +8,6 @@
 
 namespace App\Utils\Generic;
 
-
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class ParametersBag implements ParametersBagInterface

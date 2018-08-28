@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     email:
+      administrator: 'contact@webmezenc.com'
       from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
     repositoryProvider: 'doctrine'
 
