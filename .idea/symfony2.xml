@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Symfony2PluginSettings">
+    <option name="pathToTranslation" value="blog-symfony/translations" />
+    <option name="directoryToWeb" value="blog-symfony/public" />
+    <option name="directoryToApp" value="blog-symfony/src" />
+    <option name="pluginEnabled" value="true" />
+  </component>
+</project>
