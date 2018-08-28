@@ -15,7 +15,7 @@ use Psr\Container\ContainerInterface;
 
 class AuthenticateUserFactory
 {
-    const AUTHENTICATE_USER_LIST = ['Symfony','InMemory'];
+    const AUTHENTICATE_USER_LIST = ['Symfony','inMemory'];
     const DEFAULT_AUTHENTICATE_USER = 'Symfony';
 
     /**
@@ -46,7 +46,7 @@ class AuthenticateUserFactory
             case "Symfony":
                 return $this -> getSymfonyAuthenticateUser();
                 break;
-            case "InMemory":
+            case "inMemory":
                 return $this -> getInMemoryAuthenticateUser();
                 break;
         }

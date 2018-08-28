@@ -8,6 +8,7 @@
 
 namespace App\Tests\Domain\UseCases;
 
+use App\Domain\Command\Comment\AddCommentWithUserAndPost;
 use App\Domain\UseCases\Issue6UseCases;
 use App\Entity\DTO\AddCommentDTO;
 use App\Infrastructure\Form\FormBuilderCollection;
@@ -15,7 +16,10 @@ use App\Infrastructure\Form\FormBuilderFactory;
 use App\Infrastructure\Gateway\AuthenticateUser\AuthenticateUserFactory;
 use App\Infrastructure\InfrastructureFormBuilderCollectionInterface;
 use App\Infrastructure\Repository\RepositoryFactory;
+use App\Infrastructure\Validator\ValidatorFactory;
 use App\Tests\Infrastructure\Kernel\KernelFactory;
+use App\Tests\TestsUtils\Entity\AddCommentDTOEntity;
+use App\Utils\Services\Comment\CommentServices;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,10 +37,30 @@ class Issue6UseCasesTest extends TestCase
      */
     private $container;
 
+
+    /**
+     * @var AddCommentWithUserAndPost
+     */
+    private $AddCommentWithUserAndPost;
+
     public function setUp() {
 
         $kernel = KernelFactory::getKernel();
         $this->container = $kernel->getDic();
+
+        $authenticateUserFactory = new AuthenticateUserFactory($this -> container);
+        $gatewayAuthenticateUser = $authenticateUserFactory -> create("inMemory");
+
+        $validatorFactory = new ValidatorFactory();
+        $validator = $validatorFactory -> create();
+
+        $repositoryFactory = new RepositoryFactory($this -> container);
+        $commentsRepository = $repositoryFactory -> create("Comments","inMemory");
+        $postRepository = $repositoryFactory -> create("Post","inMemory");
+        $commentsServices = new CommentServices($validator,$commentsRepository);
+
+        $this -> AddCommentWithUserAndPost = new AddCommentWithUserAndPost($gatewayAuthenticateUser,$postRepository,$commentsServices );
+
 
     }
 
@@ -51,9 +75,10 @@ class Issue6UseCasesTest extends TestCase
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addCommentForm );
 
-        $addCommentDTO = $this -> getDTO( $formBuilderCollection, "" );
+        $addCommentDTO = AddCommentDTOEntity::getDTO($this -> container, $formBuilderCollection, "" );
+        $addCommentDTO -> slugPost = "post-test";
 
-        $issue6UseCases = new Issue6UseCases( $addCommentDTO );
+        $issue6UseCases = new Issue6UseCases( $addCommentDTO,$this -> AddCommentWithUserAndPost  );
 
         $dataUseCase = $issue6UseCases -> process();
 
@@ -72,9 +97,9 @@ class Issue6UseCasesTest extends TestCase
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addCommentForm );
 
-        $addCommentDTO = $this -> getDTO( $formBuilderCollection, "" );
+        $addCommentDTO = AddCommentDTOEntity::getDTO($this -> container, $formBuilderCollection, "" );
 
-        $issue6UseCases = new Issue6UseCases( $addCommentDTO );
+        $issue6UseCases = new Issue6UseCases( $addCommentDTO,$this -> AddCommentWithUserAndPost  );
 
         $dataUseCase = $issue6UseCases -> process();
 
@@ -84,14 +109,15 @@ class Issue6UseCasesTest extends TestCase
     public function testShouldObtainATextzoneToCommentPost() {
 
         $formBuilderFactory = new FormBuilderFactory( $this -> container, new Request() );
+
         $addCommentForm = $formBuilderFactory -> create("AddCommentType");
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addCommentForm );
 
-        $addCommentDTO = $this -> getDTO( $formBuilderCollection, "" );
+        $addCommentDTO = AddCommentDTOEntity::getDTO($this -> container, $formBuilderCollection, "" );
 
 
-        $this -> issue6UseCases = new Issue6UseCases( $addCommentDTO );
+        $this -> issue6UseCases = new Issue6UseCases( $addCommentDTO,$this -> AddCommentWithUserAndPost  );
 
 
         $this -> assertArrayHasKey("form", $this -> issue6UseCases -> process() );
@@ -100,21 +126,5 @@ class Issue6UseCasesTest extends TestCase
 
 
 
-
-    private function getDTO( InfrastructureFormBuilderCollectionInterface $formbuildercollection, string $slug  ): AddCommentDTO {
-
-        $AddCommentDTO = new AddCommentDTO();
-        $AddCommentDTO -> formbuildercollection = $formbuildercollection;
-        $AddCommentDTO -> slugPost = $slug;
-
-        $RepositoryFactory = new RepositoryFactory($this -> container);
-        $PostRepository = $RepositoryFactory -> create("Post","inMemory");
-        $AddCommentDTO -> postRepository = $PostRepository;
-
-        $gatewayAuthenticateUserFactory = new AuthenticateUserFactory( $this -> container );
-        $AddCommentDTO -> gatewayAuthenticateUser = $gatewayAuthenticateUserFactory -> create("InMemory");
-
-        return $AddCommentDTO;
-    }
 
 }

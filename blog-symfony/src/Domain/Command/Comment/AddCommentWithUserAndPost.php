@@ -8,18 +8,30 @@
 
 namespace App\Domain\Command\Comment;
 
-
-use App\Domain\Command\CommandExecutionInterface;
-use App\Entity\DTO\AddCommentDTO;
+use App\Entity\Comments;
+use App\Entity\Post;
+use App\Entity\User;
+use App\Exception\EntityNotFoundException;
+use App\Infrastructure\GatewayAuthenticateUser;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Repository\CommentsRepository;
+use App\Repository\PostRepository;
 use App\Utils\Services\Comment\CommentServices;
 
-class AddCommentWithUserAndPost implements CommandExecutionInterface
+class AddCommentWithUserAndPost
 {
 
+    const REQUIRED_PARAMS = ["slug"];
+
     /**
-     * @var AddCommentDTO
+     * @var GatewayAuthenticateUser
      */
-    private $addCommentDTO;
+    private $gatewayAuthenticateUser;
+
+    /**
+     * @var PostRepository
+     */
+    private $postRepository;
 
     /**
      * @var CommentServices
@@ -29,18 +41,81 @@ class AddCommentWithUserAndPost implements CommandExecutionInterface
     /**
      * AddCommentWithUserAndPost constructor.
      *
-     * @param AddCommentDTO $addCommentDTO
+     * @param GatewayAuthenticateUser $gatewayAuthenticateUser
+     * @param RepositoryAdapterInterface $postRepository
      * @param CommentServices $commentServices
      */
-    public function __construct( AddCommentDTO $addCommentDTO, CommentServices $commentServices )
+    public function __construct( GatewayAuthenticateUser $gatewayAuthenticateUser,
+                                 RepositoryAdapterInterface $postRepository,
+                                 CommentServices $commentServices)
     {
-        $this -> addCommentDTO = $addCommentDTO;
+        $this -> gatewayAuthenticateUser = $gatewayAuthenticateUser;
+        $this -> postRepository = $postRepository;
         $this -> commentServices = $commentServices;
     }
 
 
-    public function executeCommand(): bool
+    /**
+     * @param string $slug
+     * @param Comments $comments
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public function addComment( string $slug, Comments $comments ): bool
     {
-        // TODO: Implement executeCommand() method.
+        if( $this -> gatewayAuthenticateUser -> getUser() instanceof User ) {
+
+            $Post = $this -> postRepository -> findOneBy( [
+                "slug" => $slug
+            ]);
+
+            if( !$Post instanceof Post ) {
+                throw new EntityNotFoundException("A post referenced by the slug ".$slug." isn't found");
+            }
+
+
+            $comments = $this -> hydrateComment( $Post, $comments );
+            $comments = $this -> commentServices -> addComment( $comments );
+
+            return $this->commentPersistance($comments);
+
+        }
+    }
+
+    /**
+     * @param Post $post
+     * @param Comments $comments
+     *
+     * @return Comments
+     * @throws \Exception
+     */
+    private function hydrateComment( Post $post, Comments $comments ): Comments {
+
+        $comments -> setIdPost( $post );
+        $comments -> setIdUser( $this -> gatewayAuthenticateUser -> getUser() );
+        $comments -> setDateCreate( new \DateTimeImmutable() );
+        $comments -> setState(0);
+
+        return $comments;
+    }
+
+    /**
+     * @param Comments $comments
+     * @return bool
+     */
+    private function commentPersistance(Comments $comments): bool
+    {
+        if ($comments instanceof Comments) {
+
+            try {
+                $this->postRepository->getEntityManager()->flush();
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
+
+        }
+
+        return false;
     }
 }

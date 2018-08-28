@@ -59,7 +59,7 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
      *
      * @throws InfrastructureAdapterException
      */
-    public function create(string $name, string $provider = self::DEFAULT_PROVIDER)
+    public function create(string $name, string $provider = self::DEFAULT_PROVIDER): RepositoryAdapterInterface
     {
         $this -> name = $name;
         $this -> provider = $provider;

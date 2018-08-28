@@ -8,11 +8,13 @@
 
 namespace App\Domain\UseCases;
 
+use App\Domain\Command\Comment\AddCommentWithUserAndPost;
 use App\Entity\DTO\AddCommentDTO;
 use App\Entity\Mapping\MappingUserToBlogUser;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Exception\EntityAlreadyExistException;
+use App\Exception\EntityNotFoundException;
 use App\Exception\EntityNotValidException;
 use App\Infrastructure\Form\FormBuilderCollection;
 use App\Infrastructure\GatewayAuthenticateUser;
@@ -34,12 +36,20 @@ class Issue6UseCases implements UseCasesLogicInterface
     private $addCommentDTO;
 
     /**
-     * Issue6UseCases constructor.
-     * @param AddCommentDTO $addCommentDTO
+     * @var AddCommentWithUserAndPost
      */
-    public function __construct( AddCommentDTO $addCommentDTO )
+    private $addCommentWithUserAndPost;
+
+    /**
+     * Issue6UseCases constructor.
+     *
+     * @param AddCommentDTO $addCommentDTO
+     * @param AddCommentWithUserAndPost $addCommentWithUserAndPost
+     */
+    public function __construct( AddCommentDTO $addCommentDTO, AddCommentWithUserAndPost $addCommentWithUserAndPost )
     {
         $this -> addCommentDTO = $addCommentDTO;
+        $this -> addCommentWithUserAndPost = $addCommentWithUserAndPost;
     }
 
     /**
@@ -67,31 +77,17 @@ class Issue6UseCases implements UseCasesLogicInterface
         if (!$addTypeForm->isValid()) {
             return ["form" => $addTypeForm->getView(), "constraintErrors" => $addTypeForm->getErrors()->__toString()];
         } else {
-            //Add comment in database
-            return [];
-        }
-    }
 
-    /**
-     *
-     */
-    private function addComment()  {
+            try {
+                $addComment = $this -> addCommentWithUserAndPost -> addComment( $this -> addCommentDTO -> slugPost, $addTypeForm -> getData()  );
 
-        if( $this -> addCommentDTO -> gatewayAuthenticateUser -> getUser() instanceof User ) {
+                return ["msg" => "CommentSuccessfullyAdded"];
 
-            $Post = $this -> addCommentDTO -> postRepository -> findOneBy( [
-                "slug" => $this -> addCommentDTO -> slugPost
-            ]);
-
-            if( $Post instanceof Post ) {
-
+            } catch( EntityNotFoundException $e ) {
+                return ["msg" => $e -> getMessage()];
             }
         }
     }
 
-
-    private function hydrateCommentAndPersistThem() {
-
-    }
 
 }
