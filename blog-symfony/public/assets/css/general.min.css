@@ -10,4 +10,7 @@
 .elmt-articles .nav-menu .selected { background: white; color: #18BC9C; }
 .elmt-articles .nav-menu .selected:hover { background: inherit; color: inherit; cursor: initial; }
 
+.elmt-social-networks a { color: white; }
+.elmt-social-networks a:hover { color: rgba(255, 255, 255, 0.4); }
+
 /*# sourceMappingURL=general.min.css.map */
