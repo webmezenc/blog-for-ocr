@@ -27,11 +27,12 @@ class MemoryRepositoryTest extends TestCase
     }
 
 
+    public function testShouldObtainAListOfEntityWhenFindAll() {
 
+        $allEntities = $this -> memoryRepository -> findAll();
 
-
-    public function testShouldRemoveEntityButEntityIsntInRepository() {
-
+        $this -> assertInternalType("array",$allEntities);
+        $this -> assertInternalType("object",$allEntities[0]);
     }
 
     public function testShouldObtainValidUserEntityWithFindOneByMethod() {

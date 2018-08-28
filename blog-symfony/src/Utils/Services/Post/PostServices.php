@@ -12,6 +12,7 @@ namespace App\Utils\Services\Post;
 use App\Entity\Post;
 use App\Entity\ValueObject\OrderLimit;
 use App\Exception\PostServicesException;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Repository\PostRepository;
 use App\Exception\EntityNotFoundException;
 use App\Exception\InvalidStateException;
@@ -23,8 +24,9 @@ class PostServices
 
     /**
      * PostServices constructor.
+     * @param RepositoryAdapterInterface $postRepository
      */
-    public function __construct( PostRepository $postRepository )
+    public function __construct( RepositoryAdapterInterface $postRepository )
     {
         $this -> postRepository = $postRepository;
     }
