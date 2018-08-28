@@ -1,0 +1,22 @@
+{% extends "layout/base.html.twig" %}
+
+
+
+{% block zonecontenu %}
+    <section>
+        <h4>Contactez-moi</h4>
+        {% if msg is defined and msg == 'msgSentSuccess' %}
+            <div class="alert alert-success">
+                <p>Votre message a bien été envoyé, une réponse vous sera transmise dans les 72 heures</p>
+            </div>
+        {% endif %}
+        {% if form is defined %}
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
