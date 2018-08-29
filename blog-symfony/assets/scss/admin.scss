@@ -1,0 +1,24 @@
+body {
+  padding-top: 4.5rem;
+}
+
+nav {
+  .navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 13px 15px;
+  }
+  li {
+    font-size: 1.5em;
+    font-weight: bold;
+    min-width: 160px;
+    text-align: center;
+  }
+}
+
+
+.jumbotron {
+  a {
+    font-size: 1.5em;
+  }
+}

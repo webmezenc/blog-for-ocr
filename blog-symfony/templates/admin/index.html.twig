@@ -1,0 +1,19 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+<div class="jumbotron">
+    <h1>Administration du blog</h1>
+    <p> Bienvenue sur l'administration du blog, vous pouvez : </p>
+    <ul>
+        <li>
+            <a href="/admin/articles">Gérer les articles</a>
+        </li>
+        <li>
+            <a href="/admin/commentaires">Gérer les commentaires</a>
+        </li>
+        <li>
+            <a href="/admin/commentaires">Gérer les utilisateurs</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
