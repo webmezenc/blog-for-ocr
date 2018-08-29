@@ -1,0 +1,8 @@
+{% for post in postList %}
+    {% set title = post.title %}
+    {% set headcontent = post.headcontent %}
+    {% set date = post.dateUpdate|date("d-m-Y H:i") %}
+    {% set slug = post.slug %}
+
+    {% include "content/post/post-list-content.html.twig" with { "title": title, "headcontent": headcontent, "date": date, "slug":slug } %}
+{% endfor %}

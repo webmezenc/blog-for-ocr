@@ -73,13 +73,23 @@ class MemoryRepository
 
     }
 
+    public function getEntityManager() {
+        return $this;
+    }
 
-    /**
-     *
-     */
-    public function flush() {
+
+    public function findAll() {
+
+        $tupples = [];
+
+        foreach( $this -> repositoryTupples as $tupple ) {
+            $tupples[] =  $this -> hydratorServicesGeneric -> hydrate( $this -> entity, $tupple);
+        }
+
+        return $tupples;
 
     }
+
 
 
     /**
@@ -139,6 +149,9 @@ class MemoryRepository
 
 
 
+    public function flush() {
+
+    }
 
 
 

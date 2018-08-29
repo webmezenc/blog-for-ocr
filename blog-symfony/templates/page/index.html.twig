@@ -1,0 +1,27 @@
+{% extends "layout/base.html.twig" %}
+
+
+{% block zonecontenu %}
+    <section class="text-center">
+        <h2>Un blog d'un développeur en mal de développement</h2>
+    </section>
+    <div class="row elmt-accueil">
+        <div>
+            <h4>Les derniers articles du blog</h4>
+            {% include "content/post/post-list.html.twig" with {"postList": posts} %}
+        </div>
+        <div class="elmt-presentation">
+            <div>
+                <img src="{{ asset('assets/img/profil.png') }}" class="img-responsive" />
+            </div>
+            <div>
+                <h4>Nom et prénom</h4>
+                <span class="font-weight-bold">Développeur</span>
+                <span class="font-weight-bold">5 ans d'expérience</span>
+            </div>
+            <a class="btn btn-default btn-block" href="media/pdf/Basic_Curriculum_Vitae_example.pdf" target="_blank">
+                <i class="fas fa-download fa-2x"></i> Télécharger le CV
+            </a>
+        </div>
+    </div>
+{% endblock %}
