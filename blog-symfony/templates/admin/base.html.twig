@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="view" content="width=device-width, initial-scale=1.0" />
+        <title>Administration</title>
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-ui.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/fontawesome/all.min.css') }}" />
+
+        <link rel="stylesheet" href="{{ asset('assets/css/admin.min.css') }}" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/admin">
+                Administration
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/articles">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/commentaires">Commentaires</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/commentaires">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Se déconnecter</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="container">
+            {% block contenu %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
