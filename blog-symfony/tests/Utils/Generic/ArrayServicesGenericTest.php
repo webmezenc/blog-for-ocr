@@ -13,6 +13,21 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayServicesGenericTest extends TestCase
 {
+
+
+    public function testShouldASuccessWhenAllKeysAreInArray() {
+        $this -> assertTrue( ArrayServicesGeneric::allKeysAreInArray(['unitTest'], ['unitTest' => 'test']));
+    }
+
+
+    public function testShouldObtainAnExceptionWhenKeyIsntFoundInArray() {
+        $this -> expectException("\App\Exception\ParameterIsNotFoundException");
+
+        ArrayServicesGeneric::allKeysAreInArray( ["unitTest"], ["test" => "test"] );
+    }
+
+
+
     public function testShouldDeleteArrayElementInArray() {
 
         $elementToDelete = ["test" => "test"];

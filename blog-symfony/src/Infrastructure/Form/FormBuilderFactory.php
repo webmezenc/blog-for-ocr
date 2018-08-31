@@ -44,18 +44,19 @@ class FormBuilderFactory
     /**
      * @param string $formName
      * @param string $formBuilderName
+     * @param array $options
      *
      * @return InfrastructureFormBuilderInterface
      *
      * @throws FormNotFoundException
      */
-    public function create( string $formName, string $formBuilderName = self::DEFAULT_BUILDER ): InfrastructureFormBuilderInterface {
+    public function create( string $formName, string $formBuilderName = self::DEFAULT_BUILDER, array $options = array() ): InfrastructureFormBuilderInterface {
 
         if( !in_array($formBuilderName,self::FORM_BUILDER) ) {
             throw new FormNotFoundException("The form ".$formBuilderName." isn't found");
         }
 
-        return $this -> getFormBuilderSymfony( $formName );
+        return $this -> getFormBuilderSymfony( $formName,$options );
     }
 
 
@@ -66,7 +67,7 @@ class FormBuilderFactory
      *
      * @throws FormNotFoundException
      */
-    private function getFormBuilderSymfony( string $formName ) {
-        return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request );
+    private function getFormBuilderSymfony( string $formName, array $options = array()  ) {
+        return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request, $options );
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -21,6 +23,7 @@ class Post
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Type(type="integer")
      */
     private $state;
 
@@ -35,12 +38,14 @@ class Post
     private $dateUpdate;
 
     /**
+     * @Gedmo\Slug(fields={"title","id"})
      * @ORM\Column(type="string", length=200, unique=true)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -51,12 +56,14 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PostCategory")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $id_post_category;
 
