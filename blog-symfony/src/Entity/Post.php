@@ -23,7 +23,7 @@ class Post
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="integer",message="L'état de l'article doit être un entier")
      */
     private $state;
 
@@ -45,7 +45,7 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="L'article doit contenir un titre")
      */
     private $title;
 
@@ -56,7 +56,7 @@ class Post
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="L'article doit contenir du contenu")
      */
     private $content;
 
@@ -72,6 +72,13 @@ class Post
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_user;
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getId()
     {
@@ -119,7 +126,7 @@ class Post
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 

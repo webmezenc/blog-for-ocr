@@ -7,6 +7,7 @@ use App\Entity\PostCategory;
 use App\Utils\Generic\ArrayServicesGeneric;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,9 +35,19 @@ class AddPostType extends AbstractType
             ->add('content', TextareaType::class, ["required" => true, "label" => "Contenu de l'article"])
             ->add('id_post_category', EntityType::class, [
                 "required" => true,
+                "by_reference" => false,
                 "class" => PostCategory::class,
-                "choices" => []
+                "choices" => $options["attr"]["postcategory"],
+                "choice_label" => "name",
+                "choice_value" => "id"
             ] )
+            ->add('state', ChoiceType::class, [
+                "required" => true,
+                "choices" => [
+                    "Brouillon" => Post::POST_DRAFT,
+                     "Publié" => Post::POST_PUBLISHED
+                ]
+            ])
             ->add('submit', SubmitType::class, ["label" => "Ajouter l'article"])
         ;
     }

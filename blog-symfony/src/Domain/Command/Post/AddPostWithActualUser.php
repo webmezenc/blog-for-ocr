@@ -9,18 +9,45 @@
 namespace App\Domain\Command\Post;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Exception\EntityParametersErrorException;
+use App\Exception\UnhautorizedException;
+use App\Infrastructure\GatewayAuthenticateUser;
 use App\Infrastructure\InfrastructureValidatorInterface;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 
 class AddPostWithActualUser
 {
+
     /**
      * @var InfrastructureValidatorInterface
      */
     private $validator;
 
-    public function __construct( InfrastructureValidatorInterface $validator )
+    /**
+     * @var GatewayAuthenticateUser
+     */
+    private $authenticateUser;
+
+
+    /**
+     * @var RepositoryAdapterInterface
+     */
+    private $postRepository;
+
+
+    /**
+     * AddPostWithActualUser constructor.
+     * @param InfrastructureValidatorInterface $validator
+     */
+    public function __construct(
+        InfrastructureValidatorInterface $validator,
+        GatewayAuthenticateUser $authenticateUser,
+        RepositoryAdapterInterface $postRepository
+    )
     {
+        $this -> authenticateUser = $authenticateUser;
+        $this -> postRepository = $postRepository;
         $this -> validator = $validator;
     }
 
@@ -28,13 +55,26 @@ class AddPostWithActualUser
      * @param Post $post
      *
      * @return Post
+     *
+     * @throws EntityParametersErrorException
+     * @throws UnhautorizedException
      */
     public function addPost( Post $post ): Post {
+
+        if( !$this -> authenticateUser -> getUser() instanceof User ) {
+            throw new UnhautorizedException("User must be authenticate to add post");
+        }
 
         if( !$this -> validator -> validate($post) ) {
             throw new EntityParametersErrorException("Your Post entity parameters isn't a valid : ".implode(", ",$this -> validator -> getErrors()) );
         }
 
+        $post -> setDateCreate( new \DateTimeImmutable() );
+        $post -> setIdUser( $this -> authenticateUser -> getUser() );
 
+        $this -> postRepository -> persist( $post );
+        $this -> postRepository -> flush();
+
+        return $post;
     }
 }

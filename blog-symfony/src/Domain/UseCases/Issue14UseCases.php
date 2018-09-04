@@ -9,6 +9,7 @@
 namespace App\Domain\UseCases;
 
 
+use App\Domain\Command\Post\AddPostWithActualUser;
 use App\Infrastructure\Form\FormBuilderCollection;
 use App\Infrastructure\GatewayAuthenticateUser;
 
@@ -25,14 +26,23 @@ class Issue14UseCases implements UseCasesLogicInterface
     private $gatewayAuthenticateUser;
 
     /**
+     * @var AddPostWithActualUser
+     */
+    private $addPostWithActualUser;
+
+    /**
      * Issue14UseCases constructor.
+     *
      * @param FormBuilderCollection $formBuilderCollection
      * @param GatewayAuthenticateUser $gatewayAuthenticateUser
+     * @param AddPostWithActualUser $addPostWithActualUser
      */
     public function __construct( FormBuilderCollection $formBuilderCollection,
-                                 GatewayAuthenticateUser $gatewayAuthenticateUser ) {
+                                 GatewayAuthenticateUser $gatewayAuthenticateUser,
+                                 AddPostWithActualUser $addPostWithActualUser ) {
         $this -> formBuilderCollection = $formBuilderCollection;
         $this -> gatewayAuthenticateUser = $gatewayAuthenticateUser;
+        $this -> addPostWithActualUser = $addPostWithActualUser;
     }
 
 
@@ -44,6 +54,9 @@ class Issue14UseCases implements UseCasesLogicInterface
 
             if( !$addPostType -> isValid() ) {
 
+                var_dump( $addPostType -> getData() -> getTitle() );
+                var_dump( $addPostType -> getErrors() -> current() -> getMessage() );
+
                 return [
                     "form" => $this -> formBuilderCollection
                                     -> getForm("AddPostType")
@@ -53,7 +66,16 @@ class Issue14UseCases implements UseCasesLogicInterface
 
             }
 
+            try {
 
+                $post = $addPostType -> getData();
+                $this -> addPostWithActualUser -> addPost($post);
+
+                return ["msg" => "formAddedSuccessfull"];
+
+            } catch( \Exception $e ) {
+                throw $e;
+            }
 
         }
 
