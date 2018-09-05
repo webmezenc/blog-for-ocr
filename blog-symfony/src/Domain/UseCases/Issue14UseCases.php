@@ -54,9 +54,6 @@ class Issue14UseCases implements UseCasesLogicInterface
 
             if( !$addPostType -> isValid() ) {
 
-                var_dump( $addPostType -> getData() -> getTitle() );
-                var_dump( $addPostType -> getErrors() -> current() -> getMessage() );
-
                 return [
                     "form" => $this -> formBuilderCollection
                                     -> getForm("AddPostType")

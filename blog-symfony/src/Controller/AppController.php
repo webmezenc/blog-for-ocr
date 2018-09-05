@@ -19,12 +19,13 @@ class AppController extends Controller
      *
      * @return Response
      */
-    public function getResponseWithViewError( string $msg ): Response
+    public function getResponseWithViewError( string $msg, string $trace = "" ): Response
     {
 
         return $this->render(
             'page/erreur-interne.html.twig', [
             'errorMSG' => $msg,
+            'trace' => $trace
         ]);
     }
 
@@ -40,7 +41,7 @@ class AppController extends Controller
         try {
             return call_user_func_array( $process, $parameters );
         }  catch( \Exception $e ) {
-            return $this -> getResponseWithViewError( $e -> getMessage() );
+            return $this -> getResponseWithViewError( $e -> getMessage() , $e -> getTraceAsString() );
         }
 
     }

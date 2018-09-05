@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":216:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:39:"testShouldASuccessWhenAllKeysAreInArray";d:0.008;s:50:"testShouldObtainAnExceptionWhenKeyIsntFoundInArray";d:0.002;s:35:"testShouldDeleteArrayElementInArray";d:0.001;}}}
+C:30:"PHPUnit\Runner\TestResultCache":86:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:1:{s:26:"testShouldObtainAValidSlug";d:0.022;}}}

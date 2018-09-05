@@ -38,7 +38,6 @@ class Post
     private $dateUpdate;
 
     /**
-     * @Gedmo\Slug(fields={"title","id"})
      * @ORM\Column(type="string", length=200, unique=true)
      */
     private $slug;

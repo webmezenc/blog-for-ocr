@@ -78,7 +78,7 @@ class Issue14UseCasesTest extends TestCase
         $postCategory = $postCategoryRepository -> findAll();
 
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["attr" => ["postcategory" =>$postCategory]]);
+        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["postcategory" =>$postCategory]);
         $addPostType -> submitForm( [
             "title" => "Unit test essai",
             "headcontent" => "Lorem ipsum dolor sit amet, consectetur",
@@ -107,8 +107,7 @@ class Issue14UseCasesTest extends TestCase
 
     public function testShouldObtainAFormAndErrorWhenFormIsSubmitButRequiredInputIsEmpty() {
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["attr" => ["postcategory" => array()]] );
-        $addPostType -> submitForm( ["title" => "Essai"] );
+        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["postcategory" => array()] );
 
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addPostType );
@@ -123,7 +122,7 @@ class Issue14UseCasesTest extends TestCase
 
     public function testShouldObtainAFormWhenFormIsntSubmit() {
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, [ "attr" => ["postcategory" => array()]] );
+        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["postcategory" => array()] );
 
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addPostType );

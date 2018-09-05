@@ -1,5 +1,6 @@
 body {
-  padding-top: 4.5rem;
+  font-size: 13px;
+  padding-top: 8rem;
 }
 
 nav {
@@ -22,3 +23,7 @@ nav {
     font-size: 1.5em;
   }
 }
+
+/** Elements for administration space **/
+
+@import "elmt/std-margin";

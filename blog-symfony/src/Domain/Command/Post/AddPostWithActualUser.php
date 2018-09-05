@@ -15,6 +15,7 @@ use App\Exception\UnhautorizedException;
 use App\Infrastructure\GatewayAuthenticateUser;
 use App\Infrastructure\InfrastructureValidatorInterface;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\SlugServices;
 
 class AddPostWithActualUser
 {
@@ -66,15 +67,24 @@ class AddPostWithActualUser
         }
 
         if( !$this -> validator -> validate($post) ) {
-            throw new EntityParametersErrorException("Your Post entity parameters isn't a valid : ".implode(", ",$this -> validator -> getErrors()) );
+            throw new EntityParametersErrorException("Your Post entity parameters isn't a valid : ".implode(", ",$this -> validator -> getErrors()));
         }
 
-        $post -> setDateCreate( new \DateTimeImmutable() );
-        $post -> setIdUser( $this -> authenticateUser -> getUser() );
+        $post -> setDateCreate(new \DateTimeImmutable());
+        $post -> setIdUser($this -> authenticateUser -> getUser());
+        $post -> setSlug($this -> getSlug($post));
 
-        $this -> postRepository -> persist( $post );
+        $this -> postRepository -> persist($post);
         $this -> postRepository -> flush();
 
         return $post;
+    }
+
+    /**
+     * @param Post $post
+     * @return string
+     */
+    private function getSlug( Post $post ): string {
+        return SlugServices::slugify( $post -> getTitle() )."-".date('Ymd');
     }
 }

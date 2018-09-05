@@ -17,43 +17,45 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AddPostType extends AbstractType
 {
 
-    const REQUIRED_ATTRIBUTES = ["postcategory"];
-
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        if( key_exists("attr",$options) ) {
-            ArrayServicesGeneric::allKeysAreInArray( self::REQUIRED_ATTRIBUTES, $options["attr"] );
-        }
-
-
         $builder
-            ->add('state')
             ->add('title', TextType::class, ["required" => true, "label" => "Titre de l'article"])
-            ->add('headcontent', TextareaType::class, ["required" => true, "label" => "Entête"])
-            ->add('content', TextareaType::class, ["required" => true, "label" => "Contenu de l'article"])
-            ->add('id_post_category', EntityType::class, [
-                "required" => true,
-                "by_reference" => false,
-                "class" => PostCategory::class,
-                "choices" => $options["attr"]["postcategory"],
-                "choice_label" => "name",
-                "choice_value" => "id"
-            ] )
             ->add('state', ChoiceType::class, [
                 "required" => true,
                 "choices" => [
                     "Brouillon" => Post::POST_DRAFT,
-                     "Publié" => Post::POST_PUBLISHED
-                ]
+                    "Publié" => Post::POST_PUBLISHED
+                ],
+                "label" => "Etat de publication"
             ])
-            ->add('submit', SubmitType::class, ["label" => "Ajouter l'article"])
+            ->add('id_post_category', EntityType::class, [
+                "required" => true,
+                "by_reference" => false,
+                "class" => PostCategory::class,
+                "choices" => $options["postcategory"],
+                "multiple" => false,
+                "choice_label" => "name",
+                "choice_value" => "id",
+                "label" => "Catégorie"
+            ] )
+            ->add('headcontent', TextareaType::class, ["required" => true, "label" => "Entête", "attr" => [
+                "rows" => 5
+            ]])
+            ->add('content', TextareaType::class, ["required" => true, "label" => "Contenu de l'article", "attr" => [
+                "rows" => 30
+            ]])
+            ->add('submit', SubmitType::class, ["label" => "Ajouter l'article", "attr" =>
+            [
+                "class" => "btn-block"
+            ]])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('postcategory');
         $resolver->setDefaults([
             'data_class' => Post::class,
             'csrf_protection' => false
