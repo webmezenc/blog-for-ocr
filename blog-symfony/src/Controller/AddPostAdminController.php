@@ -9,8 +9,6 @@ use App\Infrastructure\Form\FormBuilderFactory;
 use App\Infrastructure\Gateway\AuthenticateUser\AuthenticateUserFactory;
 use App\Infrastructure\Repository\RepositoryFactory;
 use App\Infrastructure\Validator\ValidatorFactory;
-use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
