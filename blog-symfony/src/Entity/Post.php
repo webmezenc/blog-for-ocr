@@ -14,6 +14,7 @@ class Post
     const POST_DRAFT = 0;
     const POST_PUBLISHED = 1;
 
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
