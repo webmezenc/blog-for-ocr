@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+{% include 'admin/elmt/menu-post.html.twig' %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Ajouter un article</h1>
+        {% if msg is defined %}
+            {% if msg == "formAddedSuccessfull" %}
+                <div class="alert alert-success">
+                    <p>Votre article a été ajouté avec succès.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if form is defined %}
+            <div class="alert alert-info">
+                <p>Pour ajouter un article, remplissez le formulaire ci-dessous. Les articles ayant pour <b>état</b> publié sont automatiquement publiés sur le blog</p>
+            </div>
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

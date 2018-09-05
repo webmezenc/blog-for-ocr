@@ -8,5 +8,10 @@
         <p class="text-center">
             {{ errorMSG }}
         </p>
+        {%  if trace is not empty %}
+            <p class="text-center">
+                {{ trace }}
+            </p>
+        {% endif %}
     </div>
 {% endblock %}

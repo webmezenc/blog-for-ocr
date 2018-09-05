@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -21,6 +23,7 @@ class Post
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Type(type="integer",message="L'état de l'article doit être un entier")
      */
     private $state;
 
@@ -41,6 +44,7 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank(message="L'article doit contenir un titre")
      */
     private $title;
 
@@ -51,12 +55,14 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="L'article doit contenir du contenu")
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PostCategory")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $id_post_category;
 
@@ -65,6 +71,13 @@ class Post
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_user;
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getId()
     {
@@ -112,7 +125,7 @@ class Post
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 

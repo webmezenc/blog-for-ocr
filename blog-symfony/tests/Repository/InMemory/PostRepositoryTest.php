@@ -48,6 +48,16 @@ class PostRepositoryTest extends TestCase
     }
 
 
+    public function testShouldObtainAEntityWhenIdIsAnInteger() {
+        $postRepository = new PostRepository( $this -> inMemoryDataServices, $this -> hydratorServices );
+
+        $entities = $postRepository -> findAll( );
+
+        var_dump( $entities );
+
+        $this -> assertInternalType("integer", $entities[0] -> getId() );
+    }
+
 
     public function testShouldObtainFiveOrBelowEntitiesWithOrderLimit() {
 

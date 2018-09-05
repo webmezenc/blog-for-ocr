@@ -9,6 +9,7 @@ parameters:
       administrator: 'contact@webmezenc.com'
       from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
     repositoryProvider: 'doctrine'
+    formBuilderProvider: 'FormBuilderSymfony'
 
 
 services:
@@ -55,3 +56,9 @@ services:
     generator.csrf:
         public: true
         alias: 'security.csrf.token_generator'
+
+
+    #Event listener
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

@@ -39,16 +39,19 @@ class FormBuilderSymfonyFormBuilder implements InfrastructureFormBuilderInterfac
      * @param string $formName
      * @param FormFactory $formFactory
      * @param Request $request
+     * @param array $options
+     *
      * @throws FormNotFoundException
      */
-
-    public function __construct( string $formName, FormFactory $formFactory, Request $request ) {
-        $formfactory = $formFactory;
+    public function __construct( string $formName,
+                                 FormFactory $formFactory,
+                                 Request $request,
+                                 array $options = array() ) {
 
         $this -> isValidForm($formName);
 
         $this -> formName = $formName;
-        $this -> form = $formfactory -> create( $this->getFormClassName($formName) );
+        $this -> form = $formFactory -> create( $this->getFormClassName($formName),null,$options );
         $this -> form -> handleRequest( $request );
     }
 

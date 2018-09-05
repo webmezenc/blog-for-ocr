@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":98:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:1:{s:38:"testShouldObtainAListOfFivePostOrBelow";d:0.241;}}}
+C:30:"PHPUnit\Runner\TestResultCache":289:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:4:{s:24:"testShouldObtainASuccess";d:1.653;s:50:"testShouldObtainErrorWhenChoiceCategoryIsntDefined";d:0.093;s:68:"testShouldObtainAFormAndErrorWhenFormIsSubmitButRequiredInputIsEmpty";d:0.198;s:39:"testShouldObtainAFormWhenFormIsntSubmit";d:0.049;}}}

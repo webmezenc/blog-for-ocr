@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PostCategory;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method PostCategory[]    findAll()
  * @method PostCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostCategoryRepository extends ServiceEntityRepository
+class PostCategoryRepository extends Repository implements RepositoryAdapterInterface
 {
     public function __construct(RegistryInterface $registry)
     {

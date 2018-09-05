@@ -1,0 +1,1 @@
+C:30:"PHPUnit\Runner\TestResultCache":213:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:40:"testShouldAddPostAndPostIsAddedCorrectly";d:12.607;s:41:"testShouldAddPostButUserIsNotAuthenticate";d:0.113;s:39:"testShouldAddPostButPostEntityIsntValid";d:0.046;}}}

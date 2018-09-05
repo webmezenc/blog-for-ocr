@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Exception\EntityNotFoundException;
 use App\Infrastructure\GatewayAuthenticateUser;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
-use App\Repository\CommentsRepository;
 use App\Repository\PostRepository;
 use App\Utils\Services\Comment\CommentServices;
 

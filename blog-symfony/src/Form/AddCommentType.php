@@ -14,7 +14,7 @@ class AddCommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', TextareaType::class, ['required' => true])
+            ->add('content', TextareaType::class, ['required' => true] )
             ->add('Envoyer le commentaire', SubmitType::class, [
                 'attr' => array('class' => 'btn-block font-weight-bold')
             ])
