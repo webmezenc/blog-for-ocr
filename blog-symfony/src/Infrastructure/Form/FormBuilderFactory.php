@@ -10,6 +10,7 @@ namespace App\Infrastructure\Form;
 
 
 use App\Exception\FormNotFoundException;
+use App\Exception\TypeErrorException;
 use App\Infrastructure\InfrastructureFormBuilderInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,12 @@ class FormBuilderFactory
      * @var Request
      */
     private $request;
+
+
+    /**
+     * @var object
+     */
+    private $entity;
 
     /**
      * FormBuilderFactory constructor.
@@ -60,6 +67,17 @@ class FormBuilderFactory
     }
 
 
+    public function setEntityToFill( $entity ) {
+
+        if(!is_object($entity)) {
+            throw new TypeErrorException("Entity should be an object");
+        }
+
+        $this -> entity = $entity;
+
+    }
+
+
     /**
      * @param string $formName
      *
@@ -68,6 +86,11 @@ class FormBuilderFactory
      * @throws FormNotFoundException
      */
     private function getFormBuilderSymfony( string $formName, array $options = array()  ) {
+
+        if(isset($this -> entity)) {
+            return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request, $options,$this -> entity );
+        }
+
         return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request, $options );
     }
 }

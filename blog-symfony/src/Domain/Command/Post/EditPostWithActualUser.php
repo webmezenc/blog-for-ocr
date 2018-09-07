@@ -9,15 +9,13 @@
 namespace App\Domain\Command\Post;
 
 use App\Entity\Post;
-use App\Entity\User;
-use App\Exception\EntityParametersErrorException;
-use App\Exception\UnhautorizedException;
 use App\Infrastructure\GatewayAuthenticateUser;
 use App\Infrastructure\InfrastructureValidatorInterface;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Utils\Generic\ObjectServicesGeneric;
 use App\Utils\Generic\SlugServices;
 
-class AddPostWithActualUser extends CommandPostWithActualUser
+class EditPostWithActualUser extends CommandPostWithActualUser
 {
 
     /**
@@ -56,31 +54,19 @@ class AddPostWithActualUser extends CommandPostWithActualUser
 
     /**
      * @param Post $post
-     *
      * @return Post
      *
-     * @throws EntityParametersErrorException
-     * @throws UnhautorizedException
+     * @throws \App\Exception\EntityParametersErrorException
+     * @throws \App\Exception\UnhautorizedException
      */
-    public function addPost( Post $post ): Post {
+    public function editPost( Post $post ): Post {
 
         $this -> isValidConditionsToExecuteActions($post);
 
-        $post -> setDateCreate(new \DateTimeImmutable());
-        $post -> setIdUser($this -> authenticateUser -> getUser());
-        $post -> setSlug($this -> getSlug($post));
-
-        $this -> postRepository -> persist($post);
         $this -> postRepository -> flush();
 
         return $post;
     }
 
-    /**
-     * @param Post $post
-     * @return string
-     */
-    private function getSlug( Post $post ): string {
-        return SlugServices::slugify( $post -> getTitle() )."-".date('Ymd');
-    }
+
 }

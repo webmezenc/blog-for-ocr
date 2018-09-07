@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Post;
 use App\Entity\PostCategory;
-use App\Utils\Generic\ArrayServicesGeneric;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddPostType extends AbstractType
+class AddOrEditPostType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -46,7 +45,7 @@ class AddPostType extends AbstractType
             ->add('content', TextareaType::class, ["required" => true, "label" => "Contenu de l'article", "attr" => [
                 "rows" => 30
             ]])
-            ->add('submit', SubmitType::class, ["label" => "Ajouter l'article", "attr" =>
+            ->add('submit', SubmitType::class, ["label" => "Sauvegarde l'article", "attr" =>
             [
                 "class" => "btn-block"
             ]])
