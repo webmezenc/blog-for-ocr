@@ -147,7 +147,9 @@ class MemoryRepository
     }
 
 
+    public function remove($entity) {
 
+    }
 
     public function flush() {
 
