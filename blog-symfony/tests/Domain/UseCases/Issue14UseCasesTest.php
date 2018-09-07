@@ -102,12 +102,12 @@ class Issue14UseCasesTest extends TestCase
         $this -> expectException("\App\Exception\ParameterIsNotFoundException");
 
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $formFactory -> create("AddPostType");
+        $formFactory -> create("AddOrEditPostType");
     }
 
     public function testShouldObtainAFormAndErrorWhenFormIsSubmitButRequiredInputIsEmpty() {
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["postcategory" => array()] );
+        $addPostType = $formFactory -> create("AddOrEditPostType", $this -> formBuilderName, ["postcategory" => array()] );
 
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addPostType );
@@ -122,7 +122,7 @@ class Issue14UseCasesTest extends TestCase
 
     public function testShouldObtainAFormWhenFormIsntSubmit() {
         $formFactory = new FormBuilderFactory( $this -> container, new Request() );
-        $addPostType = $formFactory -> create("AddPostType", $this -> formBuilderName, ["postcategory" => array()] );
+        $addPostType = $formFactory -> create("AddOrEditPostType", $this -> formBuilderName, ["postcategory" => array()] );
 
         $formBuilderCollection = new FormBuilderCollection();
         $formBuilderCollection -> addForm( $addPostType );

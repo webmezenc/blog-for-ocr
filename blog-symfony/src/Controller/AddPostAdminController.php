@@ -7,23 +7,17 @@ use App\Domain\UseCases\Issue14UseCases;
 use App\Infrastructure\Form\FormBuilderCollection;
 use App\Infrastructure\Form\FormBuilderFactory;
 use App\Infrastructure\Gateway\AuthenticateUser\AuthenticateUserFactory;
-use App\Infrastructure\Repository\RepositoryFactory;
 use App\Infrastructure\Validator\ValidatorFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddPostAdminController extends AppController
+class AddPostAdminController extends PostAdminController
 {
     /**
      * @var Request
      */
     private $request;
 
-
-    /**
-     * @var array
-     */
-    private $repositories;
 
 
     /**
@@ -42,7 +36,7 @@ class AddPostAdminController extends AppController
      */
     public function addPostAdmin() {
 
-        $this -> repositories = $this -> getRepositories();
+        $this -> getRepositories();
         $dataProcess =  $this -> processData();
 
         return $this->render('admin/add-post.html.twig',$dataProcess);
@@ -92,7 +86,7 @@ class AddPostAdminController extends AppController
         $allPostcategory = $this -> repositories["PostCategory"] -> findAll();
 
         $formBuilderFactory = new FormBuilderFactory($this -> container, $this -> request);
-        $addPostForm = $formBuilderFactory -> create("AddPostType", FormBuilderFactory::DEFAULT_BUILDER, array(
+        $addPostForm = $formBuilderFactory -> create("AddOrEditPostType", FormBuilderFactory::DEFAULT_BUILDER, array(
           "postcategory" => $allPostcategory
         ));
 
@@ -114,20 +108,5 @@ class AddPostAdminController extends AppController
         return $gatewayAuthenticateUser;
     }
 
-    /**
-     * @return array
-     * @throws \App\Exception\InfrastructureAdapterException
-     */
-    private function getRepositories()
-    {
-        $repositoryFactory = new RepositoryFactory($this->container);
-        $postRepository = $repositoryFactory->create("Post");
-        $postCategoryRepository = $repositoryFactory->create("PostCategory");
 
-        return [
-            "Post" => $postRepository,
-            "PostCategory" => $postCategoryRepository
-        ];
-
-    }
 }

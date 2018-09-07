@@ -1,0 +1,29 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+{% include 'admin/elmt/menu-post.html.twig' %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Editer un article</h1>
+        {% if msg is defined %}
+            {% if msg == "postIsSuccessfullEdited" %}
+                <div class="alert alert-success">
+                    <p>Votre article a été modifié avec succès.</p>
+                </div>
+            {% elseif msg == "formIsInvalid" %}
+                <div class="alert alert-danger">
+                    <p>Votre formulaire est invalide.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if form is defined %}
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
