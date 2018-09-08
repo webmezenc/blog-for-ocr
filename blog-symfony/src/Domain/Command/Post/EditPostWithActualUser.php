@@ -63,7 +63,7 @@ class EditPostWithActualUser extends CommandPostWithActualUser
 
         $this -> isValidConditionsToExecuteActions($post);
 
-        $this -> postRepository -> flush();
+        $this -> postRepository -> getEntityManager() -> flush();
 
         return $post;
     }

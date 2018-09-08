@@ -14,7 +14,7 @@ use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
 
-class UserRepository extends MemoryRepository implements RepositoryAdapterInterface, UserRepositoryAdapterInterface
+class UserRepository extends MemoryRepository
 {
 
     const ENTITY = "User";

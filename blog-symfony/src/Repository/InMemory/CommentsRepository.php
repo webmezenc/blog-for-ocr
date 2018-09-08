@@ -13,7 +13,7 @@ use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
 
-class CommentsRepository extends MemoryRepository implements RepositoryAdapterInterface
+class CommentsRepository extends MemoryRepository
 {
 
     const ENTITY = "Comments";

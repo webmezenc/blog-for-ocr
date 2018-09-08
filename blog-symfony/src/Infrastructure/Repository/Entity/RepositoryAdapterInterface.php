@@ -10,6 +10,8 @@ namespace App\Infrastructure\Repository\Entity;
 
 interface RepositoryAdapterInterface
 {
-    public function persist( $entity );
-    public function flush();
+    public function findAll();
+    public function findOneBy(array $criteria, array $orderBy = null);
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
+    public function find($id, $lockMode = null, $lockVersion = null);
 }

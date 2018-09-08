@@ -43,6 +43,14 @@ class CommandPostWithActualUser
         $this -> validator = $validator;
     }
 
+    /**
+     * @throws UnhautorizedException
+     */
+    public function isValidUserToExecuteAction() {
+        if( !$this -> authenticateUser -> getUser() instanceof User ) {
+            throw new UnhautorizedException("User must be authenticate");
+        }
+    }
 
     /**
      * @param Post $post
@@ -52,9 +60,7 @@ class CommandPostWithActualUser
      */
     public function isValidConditionsToExecuteActions( Post $post ) {
 
-        if( !$this -> authenticateUser -> getUser() instanceof User ) {
-            throw new UnhautorizedException("User must be authenticate");
-        }
+        $this -> isValidUserToExecuteAction();
 
         if( !$this -> validator -> validate($post) ) {
             throw new EntityParametersErrorException("Your Post entity parameters isn't a valid : ".implode(", ",$this -> validator -> getErrors()));
