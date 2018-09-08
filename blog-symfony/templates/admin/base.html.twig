@@ -23,13 +23,17 @@
                     {% else %}
                     <li class="nav-item">
                     {% endif %}
-                        <a class="nav-link" href="/admin/articles">Articles</a>
+                        <a class="nav-link" href="/admin/post">Articles</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/commentaires">Commentaires</a>
                     </li>
+                    {% if app.request.attributes.get('_route') in ["admin_user_list"] %}
+                    <li class="nav-item active">
+                    {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/commentaires">Utilisateurs</a>
+                    {% endif %}
+                        <a class="nav-link" href="/admin/user">Utilisateurs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Se déconnecter</a>

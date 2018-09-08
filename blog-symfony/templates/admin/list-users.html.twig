@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Liste des utilisateurs</h1>
+        <p>
+            <a href="{{ app.request.pathInfo }}">Tous les utilisateurs</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ usersState["Actif"] }}">Utilisateurs actifs</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ usersState["Inactif"] }}">Utilisateurs inactifs</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Etat</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set stateIntToText = {}  %}
+                    {% for stateText, stateInt in usersState %}
+                        {% set stateIntToText = stateIntToText|merge({ (stateInt|number_format): stateText }) %}
+                    {% endfor %}
+                    {% for user in userList %}
+                        <tr>
+                            <td>{{ stateIntToText[user.state] }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.firstname }}</td>
+                            <td>
+                                <a href="">
+                                    <a class="btn btn-danger" href="{{ app.request.pathInfo }}/delete/{{ user.id }}">Supprimer</a>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -6,9 +6,9 @@
     <div class="col-12 elmt-std-margin">
         <h1>Liste des articles</h1>
         <p>
-            <a href="{{ app.request.basePath }}">Tous les articles</a> |
-            <a href="{{ app.request.basePath }}?state={{ postStates["Publié"] }}">Articles publiés</a> |
-            <a href="{{ app.request.basePath }}?state={{ postStates["Brouillon"] }}">Brouillons</a>
+            <a href="{{ app.request.pathInfo }}">Tous les articles</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ postStates["Publié"] }}">Articles publiés</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ postStates["Brouillon"] }}">Brouillons</a>
         </p>
         <div class="table-responsive">
             <table class="table table-bordered table-hover text-center">
@@ -31,12 +31,12 @@
                             <td>{{ post.dateCreate|date("H:i d-m-Y") }}</td>
                             <td>{{ post.title }}</td>
                             <td>
-                                <a class="btn btn-primary text-white" href="/admin/post/edit/{{ post.slug }}">
+                                <a class="btn btn-primary text-white" href="{{ app.request.pathInfo }}/edit/{{ post.slug }}">
                                     <i class="fa fa-edit"></i> Editer
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-danger text-white" href="/admin/post/delete/{{ post.slug }}">
+                                <a class="btn btn-danger text-white" href="{{ app.request.pathInfo }}/delete/{{ post.slug }}">
                                     <i class="fa fa-trash"></i> Supprimer
                                 </a>
                             </td>
