@@ -14,7 +14,7 @@ use App\Infrastructure\Repository\Entity\UserRepositoryAdapterInterface;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
 
-class PostCategoryRepository extends MemoryRepository implements RepositoryAdapterInterface, UserRepositoryAdapterInterface
+class PostCategoryRepository extends MemoryRepository
 {
 
     const ENTITY = "PostCategory";

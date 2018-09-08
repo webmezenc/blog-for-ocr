@@ -10,6 +10,7 @@ namespace App\Domain\UseCases;
 
 use App\Domain\Command\Post\DeletePostWithActualUser;
 use App\Exception\ParameterIsNotFoundException;
+use App\Exception\EntityNotFoundException;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Repository\PostRepository;
 
@@ -19,7 +20,7 @@ class Issue36UseCases implements UseCasesLogicInterface
     const POST_DELETE_SUCCESS = "postDeleteSuccess";
 
     /**
-     * @var PostRepository
+     * @var RepositoryAdapterInterface
      */
     private $postRepository;
 
@@ -58,7 +59,10 @@ class Issue36UseCases implements UseCasesLogicInterface
     /**
      * @return array
      *
+     * @throws EntityNotFoundException
      * @throws ParameterIsNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function process(): array
     {
@@ -67,6 +71,8 @@ class Issue36UseCases implements UseCasesLogicInterface
         }
 
         $this -> deletePostWithActualUser -> deletePost($this -> slug);
+
+        $this -> postRepository -> getEntityManager() -> flush();
 
         return [
             "msg" => self::POST_DELETE_SUCCESS

@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+{% include 'admin/elmt/menu-post.html.twig' %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Supprimer un article</h1>
+        {% if msg is defined %}
+            {% if msg == "postDeleteSuccess" %}
+                <div class="alert alert-success">
+                    <p>Votre article a été supprimé avec succès.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

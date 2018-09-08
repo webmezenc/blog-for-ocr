@@ -70,8 +70,8 @@ class AddPostWithActualUser extends CommandPostWithActualUser
         $post -> setIdUser($this -> authenticateUser -> getUser());
         $post -> setSlug($this -> getSlug($post));
 
-        $this -> postRepository -> persist($post);
-        $this -> postRepository -> flush();
+        $this -> postRepository -> getEntityManager() -> persist($post);
+        $this -> postRepository -> getEntityManager() -> flush();
 
         return $post;
     }

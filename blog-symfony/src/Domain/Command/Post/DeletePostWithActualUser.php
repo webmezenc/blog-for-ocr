@@ -8,10 +8,7 @@
 
 namespace App\Domain\Command\Post;
 
-
-use App\Entity\Post;
 use App\Exception\EntityNotFoundException;
-use App\Exception\NotFoundException;
 use App\Infrastructure\GatewayAuthenticateUser;
 use App\Infrastructure\InfrastructureValidatorInterface;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
@@ -53,7 +50,7 @@ class DeletePostWithActualUser extends CommandPostWithActualUser
             "slug" => $slug
         ]);
 
-        $this -> repository -> remove($post);
+        $this -> repository -> getEntityManager() -> remove($post);
 
     }
 }
