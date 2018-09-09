@@ -132,7 +132,7 @@ class MemoryRepository implements RepositoryAdapterInterface
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): ?array {
 
-        return $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
+        return $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $criteria, $this -> repositoryTupples, $this -> entity );
     }
 
 
@@ -145,7 +145,7 @@ class MemoryRepository implements RepositoryAdapterInterface
      * @throws EntityNotFoundException
      */
     public function findOneBy(array $criteria, array $orderBy = null) {
-        $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
+        $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $criteria, $this -> repositoryTupples, $this -> entity );
 
         if( is_null($find) ) {
             throw new EntityNotFoundException("Entity isn't found");

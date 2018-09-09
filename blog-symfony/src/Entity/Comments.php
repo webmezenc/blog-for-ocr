@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comments
 {
+    const COMMENTS_INVALID = 0;
+    const COMMENTS_VALID = 1;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
