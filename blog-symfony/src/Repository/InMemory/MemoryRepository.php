@@ -141,14 +141,12 @@ class MemoryRepository implements RepositoryAdapterInterface
      * @param array|null $orderBy
      *
      * @return mixed
-     *
-     * @throws EntityNotFoundException
      */
     public function findOneBy(array $criteria, array $orderBy = null) {
         $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $criteria, $this -> repositoryTupples, $this -> entity );
 
         if( is_null($find) ) {
-            throw new EntityNotFoundException("Entity isn't found");
+            return null;
         } else {
             return current($find);
         }
