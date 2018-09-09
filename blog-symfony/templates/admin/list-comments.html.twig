@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Liste des commentaires</h1>
+        <p>
+            <a href="{{ app.request.pathInfo }}">Tous les commentaires</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ commentsState["Validé"] }}">Commentaires validés</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ commentsState["Non validé"] }}">Commentaires à valider</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Etat</th>
+                        <th>Auteur</th>
+                        <th>Date de publication</th>
+                        <th>Contenu</th>
+                        <th colspan="2">Liens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set stateIntToText = {}  %}
+                    {% for stateText, stateInt in commentsState %}
+                        {% set stateIntToText = stateIntToText|merge({ (stateInt|number_format): stateText }) %}
+                    {% endfor %}
+                    {% for comment in commentsList %}
+                        <tr>
+                            <td>{{ stateIntToText[comment.state] }}</td>
+                            <td>{{ comment.iduser.firstname }} {{ comment.iduser.lastname }}</td>
+                            <td>{{ comment.dateCreate|date("H:i d-m-Y") }}</td>
+                            <td>{{ comment.content }}</td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
