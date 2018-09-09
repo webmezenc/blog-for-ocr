@@ -15,6 +15,7 @@
                     <tr>
                         <th>Etat</th>
                         <th>Auteur</th>
+                        <th>Article</th>
                         <th>Date de publication</th>
                         <th>Contenu</th>
                         <th colspan="2">Liens</th>
@@ -29,6 +30,7 @@
                         <tr>
                             <td>{{ stateIntToText[comment.state] }}</td>
                             <td>{{ comment.iduser.firstname }} {{ comment.iduser.lastname }}</td>
+                            <td><a href="/view/{{ comment.idpost.slug }}" target="_blank">{{ comment.idpost.title }}</a></td>
                             <td>{{ comment.dateCreate|date("H:i d-m-Y") }}</td>
                             <td>{{ comment.content }}</td>
                             <td>
