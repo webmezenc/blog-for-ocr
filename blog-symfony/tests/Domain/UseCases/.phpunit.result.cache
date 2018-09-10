@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":175:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:52:"testShouldObtainAMessageSuccessfullWhenDeleteComment";d:0.238;s:47:"testShouldObtainAnErrorWhenParameterIsntDefined";d:0.031;}}}
+C:30:"PHPUnit\Runner\TestResultCache":218:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:48:"testShouldObtainASuccessMessageWhenUserIsDeleted";d:8.286;s:37:"testShouldDeleteAUserButUserIsntExist";d:0.063;s:41:"testShouldDeleteAUserButUserIdIsntDefined";d:0.035;}}}

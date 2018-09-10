@@ -32,7 +32,7 @@
                     {% endif %}
                         <a class="nav-link" href="/admin/comments">Commentaires</a>
                     </li>
-                    {% if app.request.attributes.get('_route') in ["admin_user_list"] %}
+                    {% if app.request.attributes.get('_route') in ["admin_user_list","admin_delete_user"] %}
                     <li class="nav-item active">
                     {% else %}
                     <li class="nav-item">

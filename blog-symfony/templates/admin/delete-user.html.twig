@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Supprimer un utilisateur</h1>
+        {% if msg is defined %}
+            {% if msg == "userSuccessfullDeleted" %}
+                <div class="alert alert-success">
+                    <p>Cet utilisateur a été supprimé avec succès.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
