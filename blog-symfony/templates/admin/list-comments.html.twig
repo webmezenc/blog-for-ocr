@@ -34,6 +34,9 @@
                             <td>{{ comment.dateCreate|date("H:i d-m-Y") }}</td>
                             <td>{{ comment.content }}</td>
                             <td>
+                                {% if stateIntToText[comment.state] == 'Non validé' %}
+                                    <a class="btn btn-success" href="{{ app.request.pathInfo }}/publish/{{ comment.id }}">Publier</a>
+                                {% endif %}
                             </td>
                             <td>
                                 <a class="btn btn-danger" href="{{ app.request.pathInfo }}/delete/{{ comment.id }}">Supprimer</a>

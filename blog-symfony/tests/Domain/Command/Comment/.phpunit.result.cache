@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":151:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:42:"testShouldAddCommentndAddCommentIsASuccess";d:11.385;s:33:"testShouldAddPostButSlugIsntValid";d:0.06;}}}
+C:30:"PHPUnit\Runner\TestResultCache":104:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:1:{s:44:"testShouldObtainValidationWhenPublishComment";d:0.233;}}}

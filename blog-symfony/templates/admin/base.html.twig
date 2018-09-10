@@ -25,7 +25,7 @@
                     {% endif %}
                         <a class="nav-link" href="/admin/post">Articles</a>
                     </li>
-                    {% if app.request.attributes.get('_route') in ["admin_comments_list","admin_delete_comment"] %}
+                    {% if app.request.attributes.get('_route') in ["admin_comments_list","admin_delete_comment","admin_publish_comment"] %}
                     <li class="nav-item active">
                     {% else %}
                     <li class="nav-item">
