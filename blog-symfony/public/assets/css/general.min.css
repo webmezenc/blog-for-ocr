@@ -27,4 +27,5 @@
   .elmt-accueil > div:nth-of-type(2) { margin-left: 5%; -webkit-box-ordinal-group: 2; -ms-flex-order: 1; order: 1; width: 35%; } }
 
 .btn i { vertical-align: middle; }
+
 /*# sourceMappingURL=general.min.css.map */

@@ -62,4 +62,5 @@ class Issue50UseCasesTest extends TestCase
 
         return $this->repository;
     }
+
 }
