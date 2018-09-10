@@ -32,7 +32,7 @@
                     {% endif %}
                         <a class="nav-link" href="/admin/comments">Commentaires</a>
                     </li>
-                    {% if app.request.attributes.get('_route') in ["admin_user_list","admin_delete_user"] %}
+                    {% if app.request.attributes.get('_route') in ["admin_user_list","admin_delete_user","admin_activate_user"] %}
                     <li class="nav-item active">
                     {% else %}
                     <li class="nav-item">
@@ -50,5 +50,11 @@
             {% block contenu %}
             {% endblock %}
         </main>
+
+        <footer>
+            <p class="text-center">
+                Interface d'administration du blog - <a href="/">retourner sur le blog</a>
+            </p>
+        </footer>
     </body>
 </html>

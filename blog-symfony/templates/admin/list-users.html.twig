@@ -32,9 +32,12 @@
                             <td>{{ user.lastname }}</td>
                             <td>{{ user.firstname }}</td>
                             <td>
-                                <a href="">
-                                    <a class="btn btn-danger" href="{{ app.request.pathInfo }}/delete/{{ user.id }}">Supprimer</a>
-                                </a>
+                            {% if stateIntToText[user.state] == "Inactif" %}
+                                <a class="btn btn-success" href="{{ app.request.pathInfo }}/activate/{{ user.id }}">Activer</a>
+                            {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{{ app.request.pathInfo }}/delete/{{ user.id }}">Supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}

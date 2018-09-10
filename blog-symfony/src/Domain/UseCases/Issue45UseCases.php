@@ -62,7 +62,7 @@ class Issue45UseCases implements UseCasesLogicInterface
      */
     public function process(): array
     {
-        if(empty($this->id)) {
+        if(!isset($this->id)) {
             throw new ParameterUndefinedException("Id must be defined");
         }
 

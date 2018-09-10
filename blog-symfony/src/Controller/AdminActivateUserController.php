@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use App\Domain\Command\User\DeleteCommandUser;
-use App\Domain\UseCases\Issue50UseCases;
+use App\Domain\Command\User\ActivateCommandUser;
+use App\Domain\UseCases\Issue41UseCases;
 use App\Infrastructure\Repository\RepositoryFactory;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class AdminDeleteUserController extends AppController
+class AdminActivateUserController extends AppController
 {
     /**
-     * @Route("/admin/user/delete/{id}", name="admin_delete_user")
+     * @Route("/admin/user/activate/{id}", name="admin_activate_user")
      */
     public function index($id)
     {
-        return $this -> processController( array($this,'deleteUser'), [$id] );
+        return $this -> processController( array($this,'activateUser'), [$id] );
     }
 
     /**
@@ -23,15 +23,15 @@ class AdminDeleteUserController extends AppController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \App\Exception\InfrastructureAdapterException
      */
-    public function deleteUser($id) {
+    public function activateUser($id) {
         $userRepository = $this -> getRepository();
 
-        $deleteCommandUser = new DeleteCommandUser($userRepository);
+        $activateCommandUser = new ActivateCommandUser($userRepository);
 
-        $issue50UseCases = new Issue50UseCases($deleteCommandUser,$userRepository);
-        $issue50UseCases->setId($id);
-        return $this -> render("admin/delete-user.html.twig",
-            $issue50UseCases -> process()
+        $issue41UseCases = new Issue41UseCases($activateCommandUser,$userRepository);
+        $issue41UseCases->setId($id);
+        return $this -> render("admin/activate-user.html.twig",
+            $issue41UseCases -> process()
         );
     }
 
