@@ -1,3 +1,8 @@
+{% if commentsList is defined and commentsList|length > 0 %}
+    {% for comments in commentsList %}
+        {% include "content/fragment/view-comment.html.twig" %}
+    {% endfor %}
+{% endif %}
 <section>
     <h5>Ajouter un commentaire</h5>
 

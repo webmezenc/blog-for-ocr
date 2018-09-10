@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Domain\Command\Comment\AddCommentWithUserAndPost;
 use App\Domain\UseCases\Issue3UseCases;
+use App\Domain\UseCases\Issue52UseCases;
 use App\Domain\UseCases\Issue6UseCases;
 use App\Entity\DTO\AddCommentDTO;
 use App\Infrastructure\Form\FormBuilderCollection;
@@ -106,7 +107,8 @@ class ViewPostController extends AppController
         $Request = RequestFactory::create();
 
         $postServices = new PostServices( $repository["post"] );
-        $issue3UseCase = new Issue3UseCases( $postServices,$Request,$parameterBag );
+        $issue52UseCases = new Issue52UseCases($repository["comments"] );
+        $issue3UseCase = new Issue3UseCases( $postServices,$Request,$parameterBag,$issue52UseCases );
 
         return $issue3UseCase -> process();
     }

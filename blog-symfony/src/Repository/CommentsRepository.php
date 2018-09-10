@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comments;
+use App\Entity\Post;
 use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Infrastructure\Repository\Entity\RepositoryEntityManagerAdapterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,6 +25,17 @@ class CommentsRepository extends Repository implements RepositoryAdapterInterfac
     public function getEntityManager()
     {
         return parent::getEntityManager();
+    }
+
+    /**
+     * @param Post $post
+     * @return Comments[]
+     */
+    public function findCommentsPublishByPost( Post $post ) {
+        return $this -> findBy([
+            "id_post" => $post,
+            "state" => Post::POST_PUBLISHED
+        ]);
     }
 
 //    /**

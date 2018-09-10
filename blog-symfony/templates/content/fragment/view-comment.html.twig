@@ -1,0 +1,10 @@
+<div class="elmt-comment">
+    <header>
+        <p class="text-left">
+            Posté le {{ comments.dateCreate|date("H:i d-m-Y") }} par <b>{{ comments.iduser.firstname }} {{ comments.iduser.lastname }}</b>
+        </p>
+    </header>
+    <div>
+        {{ comments.content }}
+    </div>
+</div>

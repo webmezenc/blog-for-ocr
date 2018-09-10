@@ -77,4 +77,5 @@ class Issue19UseCasesTest extends TestCase
         $this -> assertArrayHasKey("userList",$dataProcess);
 
     }
+
 }
