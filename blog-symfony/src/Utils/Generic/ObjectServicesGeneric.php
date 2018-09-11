@@ -42,26 +42,6 @@ class ObjectServicesGeneric
     }
 
 
-
-
-
-    /**
-     * @param \ReflectionProperty[] $arrReflectionProperty
-     *
-     * @return array
-     */
-    static private function getArrayParamsValueFromArrayReflectionProperty( array $arrReflectionProperty ): array {
-
-        $arrReturn = [];
-
-        foreach( $arrReflectionProperty as $reflectionProperty ) {
-            $arrReturn[ $reflectionProperty -> getName() ] = $reflectionProperty -> getValue();
-        }
-
-        return $arrReturn;
-    }
-
-
     /**
      * @param \ReflectionProperty[] $arrReflectionProperty
      * @param object $object
