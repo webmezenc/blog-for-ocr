@@ -3,7 +3,7 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block zonecontenu %}
-    <section>
+    <article>
         <div class="row">
             <div class="col-sm-9 col-xs-12">
                 <h1>{{ title }}</h1>
@@ -19,5 +19,9 @@
                 {{ content|raw }}
             </div>
         </div>
+    </article>
+    <section>
+        <h4>Commentaires</h4>
+        {% include "content/comment/comment-post.html.twig" %}
     </section>
 {%  endblock %}

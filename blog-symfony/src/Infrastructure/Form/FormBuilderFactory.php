@@ -10,6 +10,7 @@ namespace App\Infrastructure\Form;
 
 
 use App\Exception\FormNotFoundException;
+use App\Exception\TypeErrorException;
 use App\Infrastructure\InfrastructureFormBuilderInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FormBuilderFactory
 {
     const FORM_BUILDER = ['FormBuilderSymfony'];
-
+    const DEFAULT_BUILDER = 'FormBuilderSymfony';
 
     /**
      * @var ContainerInterface
@@ -29,6 +30,12 @@ class FormBuilderFactory
      * @var Request
      */
     private $request;
+
+
+    /**
+     * @var object
+     */
+    private $entity;
 
     /**
      * FormBuilderFactory constructor.
@@ -44,18 +51,30 @@ class FormBuilderFactory
     /**
      * @param string $formName
      * @param string $formBuilderName
+     * @param array $options
      *
      * @return InfrastructureFormBuilderInterface
      *
      * @throws FormNotFoundException
      */
-    public function create( string $formName, string $formBuilderName = 'FormBuilderSymfony' ): InfrastructureFormBuilderInterface {
+    public function create( string $formName, string $formBuilderName = self::DEFAULT_BUILDER, array $options = array() ): InfrastructureFormBuilderInterface {
 
         if( !in_array($formBuilderName,self::FORM_BUILDER) ) {
             throw new FormNotFoundException("The form ".$formBuilderName." isn't found");
         }
 
-        return $this -> getFormBuilderSymfony( $formName );
+        return $this -> getFormBuilderSymfony( $formName,$options );
+    }
+
+
+    public function setEntityToFill( $entity ) {
+
+        if(!is_object($entity)) {
+            throw new TypeErrorException("Entity should be an object");
+        }
+
+        $this -> entity = $entity;
+
     }
 
 
@@ -66,7 +85,12 @@ class FormBuilderFactory
      *
      * @throws FormNotFoundException
      */
-    private function getFormBuilderSymfony( string $formName ) {
-        return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request );
+    private function getFormBuilderSymfony( string $formName, array $options = array()  ) {
+
+        if(isset($this -> entity)) {
+            return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request, $options,$this -> entity );
+        }
+
+        return new FormBuilderSymfonyFormBuilder( $formName,$this -> container -> get("form.factory"),$this -> request, $options );
     }
 }

@@ -28,6 +28,13 @@ class FormBuilderFactoryTest extends TestCase
 
     }
 
+    public function testShouldObtainAnErrorWhenDefineEntityButEntityIsntAnObject() {
+        $this -> expectException("\App\Exception\TypeErrorException");
+        $formBuilderFactory = new FormBuilderFactory(  $this -> container, new Request() );
+        $formBuilderFactory -> setEntityToFill( true );
+
+    }
+
 
     public function testShouldObtainAValidFormBuilder() {
         $formBuilderFactory = new FormBuilderFactory(  $this -> container, new Request() );

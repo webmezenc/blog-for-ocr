@@ -1,0 +1,46 @@
+body {
+  font-size: 13px;
+  padding-top: 8rem;
+}
+
+nav {
+  .navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 13px 15px;
+  }
+  li {
+    font-size: 1.5em;
+    font-weight: bold;
+    min-width: 160px;
+    text-align: center;
+  }
+}
+
+
+footer {
+  background-color:#343a40;
+  color: rgba(white,0.5);
+  height: 40px;
+  padding: 10px 0;
+
+  a {
+    color: white;
+    text-decoration: underline;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+
+.jumbotron {
+  a {
+    font-size: 1.5em;
+  }
+}
+
+/** Elements for administration space **/
+
+@import "elmt/std-margin";

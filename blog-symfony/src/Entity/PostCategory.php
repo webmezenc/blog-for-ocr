@@ -26,6 +26,13 @@ class PostCategory
      */
     private $name;
 
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -53,5 +60,10 @@ class PostCategory
         $this -> name = $name;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this -> name;
     }
 }

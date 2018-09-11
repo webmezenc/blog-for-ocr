@@ -22,7 +22,7 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
 {
 
     const PROVIDER_LIST = ['doctrine',"inMemory"];
-
+    const DEFAULT_PROVIDER = 'doctrine';
 
     /**
      * @var string
@@ -59,7 +59,7 @@ class RepositoryFactory implements InfrastructureRepositoryFactoryInterface
      *
      * @throws InfrastructureAdapterException
      */
-    public function create(string $name, string $provider = "doctrine")
+    public function create(string $name, string $provider = self::DEFAULT_PROVIDER): RepositoryAdapterInterface
     {
         $this -> name = $name;
         $this -> provider = $provider;

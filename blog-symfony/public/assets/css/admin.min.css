@@ -1,0 +1,15 @@
+body { font-size: 13px; padding-top: 8rem; }
+
+nav .navbar-brand { font-size: 1.5em; font-weight: bold; padding: 13px 15px; }
+nav li { font-size: 1.5em; font-weight: bold; min-width: 160px; text-align: center; }
+
+footer { background-color: #343a40; color: rgba(255, 255, 255, 0.5); height: 40px; padding: 10px 0; }
+footer a { color: white; text-decoration: underline; }
+footer a:hover { text-decoration: none; }
+
+.jumbotron a { font-size: 1.5em; }
+
+/** Elements for administration space **/
+.elmt-std-margin > div, .elmt-std-margin > section { margin: 45px 0; }
+
+/*# sourceMappingURL=admin.min.css.map */

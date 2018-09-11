@@ -6,8 +6,10 @@
 parameters:
     locale: 'en'
     email:
+      administrator: 'contact@webmezenc.com'
       from: 'ba729208b7-aad1bd@inbox.mailtrap.io'
     repositoryProvider: 'doctrine'
+    formBuilderProvider: 'FormBuilderSymfony'
 
 
 services:
@@ -48,7 +50,15 @@ services:
     logger.debug:
         public: true
         alias: 'monolog.logger.debug'
-
+    security.user:
+        public: true
+        alias: 'security.helper'
     generator.csrf:
         public: true
         alias: 'security.csrf.token_generator'
+
+
+    #Event listener
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

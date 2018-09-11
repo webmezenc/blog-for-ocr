@@ -16,6 +16,8 @@ class User
     const DEFAULT_LEVEL = 1;
     const USER_LEVEL = 1;
     const ADMIN_LEVEL = 2;
+    const USER_INACTIVE = 0;
+    const USER_ACTIVE = 1;
 
     /**
      * @ORM\Id()

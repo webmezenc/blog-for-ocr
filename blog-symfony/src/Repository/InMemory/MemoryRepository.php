@@ -12,12 +12,13 @@ namespace App\Repository\InMemory;
 use App\Entity\User;
 use App\Exception\EntityNotFoundException;
 use App\Exception\EntityNotValidException;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
 use App\Utils\Generic\EntityServicesGeneric;
 use App\Utils\Generic\HydratorServicesGeneric;
 use App\Utils\Generic\InMemoryDataServicesGeneric;
 use App\Utils\Generic\ObjectServicesGeneric;
 
-class MemoryRepository
+class MemoryRepository implements RepositoryAdapterInterface
 {
 
     /**
@@ -67,19 +68,32 @@ class MemoryRepository
      *
      * @throws EntityNotFoundException
      */
-    public function find( int $id ) {
+    public function find($id, $lockMode = null, $lockVersion = null) {
 
         return $this -> findOneBy( array("id" => $id ));
 
     }
 
+    public function getEntityManager() {
+        return $this;
+    }
+
 
     /**
-     *
+     * @return array
      */
-    public function flush() {
+    public function findAll() {
+
+        $tupples = [];
+
+        foreach( $this -> repositoryTupples as $tupple ) {
+            $tupples[] =  $this -> hydratorServicesGeneric -> hydrate( $this -> entity, $tupple);
+        }
+
+        return $tupples;
 
     }
+
 
 
     /**
@@ -108,37 +122,44 @@ class MemoryRepository
     }
 
 
-
     /**
-     * @param array $params
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @param null $limit
+     * @param null $offset
+     *
      * @return array|null
      */
-    public function findBy( array $params ): ?array {
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): ?array {
 
-        return $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
+        return $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $criteria, $this -> repositoryTupples, $this -> entity );
     }
 
 
     /**
-     * @param array $params
+     * @param array $criteria
+     * @param array|null $orderBy
      *
-     * @return object
-     *
-     * @throws EntityNotFoundException
+     * @return mixed
      */
-    public function findOneBy( array $params ) {
-        $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $params, $this -> repositoryTupples, $this -> entity );
+    public function findOneBy(array $criteria, array $orderBy = null) {
+        $find = $this -> inMemoryDataServicesGeneric -> searchInTuppleWithParametersAndHydrateEntityIfEntityIsDefined( $criteria, $this -> repositoryTupples, $this -> entity );
 
         if( is_null($find) ) {
-            throw new EntityNotFoundException("Entity isn't found");
+            return null;
         } else {
             return current($find);
         }
     }
 
 
+    public function remove($entity) {
 
+    }
 
+    public function flush() {
+
+    }
 
 
 

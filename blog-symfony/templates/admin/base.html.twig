@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="view" content="width=device-width, initial-scale=1.0" />
+        <title>Administration</title>
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-ui.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/fontawesome/all.min.css') }}" />
+
+        <link rel="stylesheet" href="{{ asset('assets/css/admin.min.css') }}" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/admin">
+                Administration
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    {% if app.request.attributes.get('_route') in ["add_post_admin","admin_list_post","admin_edit_post","admin_delete_post"] %}
+                    <li class="nav-item active">
+                    {% else %}
+                    <li class="nav-item">
+                    {% endif %}
+                        <a class="nav-link" href="/admin/post">Articles</a>
+                    </li>
+                    {% if app.request.attributes.get('_route') in ["admin_comments_list","admin_delete_comment","admin_publish_comment"] %}
+                    <li class="nav-item active">
+                    {% else %}
+                    <li class="nav-item">
+                    {% endif %}
+                        <a class="nav-link" href="/admin/comments">Commentaires</a>
+                    </li>
+                    {% if app.request.attributes.get('_route') in ["admin_user_list","admin_delete_user","admin_activate_user"] %}
+                    <li class="nav-item active">
+                    {% else %}
+                    <li class="nav-item">
+                    {% endif %}
+                        <a class="nav-link" href="/admin/user">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Se déconnecter</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="container">
+            {% block contenu %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p class="text-center">
+                Interface d'administration du blog - <a href="/">retourner sur le blog</a>
+            </p>
+        </footer>
+    </body>
+</html>

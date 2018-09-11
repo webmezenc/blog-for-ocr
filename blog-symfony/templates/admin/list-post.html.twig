@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block contenu %}
+{% include 'admin/elmt/menu-post.html.twig' %}
+<div class="row">
+    <div class="col-12 elmt-std-margin">
+        <h1>Liste des articles</h1>
+        <p>
+            <a href="{{ app.request.pathInfo }}">Tous les articles</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ postStates["Publié"] }}">Articles publiés</a> |
+            <a href="{{ app.request.pathInfo }}?state={{ postStates["Brouillon"] }}">Brouillons</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Etat</th>
+                        <th>Date de publication</th>
+                        <th>Titre</th>
+                        <th colspan="2">Liens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set stateIntToText = {}  %}
+                    {% for stateText, stateInt in postStates %}
+                        {% set stateIntToText = stateIntToText|merge({ (stateInt|number_format): stateText }) %}
+                    {% endfor %}
+                    {% for post in postList %}
+                        <tr>
+                            <td>{{ stateIntToText[post.state] }}</td>
+                            <td>{{ post.dateCreate|date("H:i d-m-Y") }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>
+                                <a class="btn btn-primary text-white" href="{{ app.request.pathInfo }}/edit/{{ post.slug }}">
+                                    <i class="fa fa-edit"></i> Editer
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger text-white" href="{{ app.request.pathInfo }}/delete/{{ post.slug }}">
+                                    <i class="fa fa-trash"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

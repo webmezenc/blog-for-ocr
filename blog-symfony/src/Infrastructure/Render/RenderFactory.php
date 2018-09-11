@@ -15,6 +15,7 @@ use Psr\Container\ContainerInterface;
 class RenderFactory
 {
     const RENDERS = ['Twig'];
+    const DEFAULT_RENDER = 'Twig';
 
 
     /**
@@ -32,7 +33,7 @@ class RenderFactory
      *
      * @throws InfrastructureAdapterException
      */
-    public function create( string $name = "Twig" ) {
+    public function create( string $name = self::DEFAULT_RENDER ) {
 
         $this->isValidRenderException($name);
 

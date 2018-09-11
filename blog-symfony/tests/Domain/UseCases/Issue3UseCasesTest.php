@@ -9,6 +9,7 @@
 namespace App\Tests\Domain\UseCases;
 
 use App\Domain\UseCases\Issue3UseCases;
+use App\Domain\UseCases\Issue52UseCases;
 use App\Infrastructure\InfrastructureRequestInterface;
 use App\Infrastructure\Repository\RepositoryFactory;
 use App\Infrastructure\Request\RequestFactory;
@@ -30,24 +31,29 @@ class Issue3UseCasesTest extends TestCase
      */
     private $request;
 
-
+    /**
+     * @var Issue52UseCases
+     */
+    private $issue52UseCases;
 
     public function setUp() {
 
-        $this -> postServices = $this -> initPostServices();
+        $this -> postServices = $this -> initPostServicesAndIssue52UseCases();
         $this -> request = RequestFactory::create();
 
     }
 
 
 
-    private function initPostServices(): PostServices {
+    private function initPostServicesAndIssue52UseCases(): PostServices {
 
         $kernel = KernelFactory::getKernel();
 
         $repositoryFactory = new RepositoryFactory( $kernel -> getDic() );
 
-        $postRepository = $repositoryFactory -> create("Post");
+        $postRepository = $repositoryFactory -> create("Post","inMemory");
+        $commentsRepository = $repositoryFactory -> create("Comments","inMemory");
+        $this -> issue52UseCases = new Issue52UseCases($commentsRepository);
 
         return new PostServices( $postRepository );
     }
@@ -58,7 +64,7 @@ class Issue3UseCasesTest extends TestCase
 
         $parameterBag  = new ParametersBag( ["slug" => "blog-is-open"] );
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request,$parameterBag );
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request,$parameterBag,$this -> issue52UseCases );
 
         $this -> assertInternalType( "array", $issue3UseCases -> process() );
 
@@ -71,7 +77,7 @@ class Issue3UseCasesTest extends TestCase
 
         $parameterBag  = new ParametersBag( ["slug" => "unittestnotpublished"] );
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag );
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag,$this -> issue52UseCases );
 
         $issue3UseCases -> process();
     }
@@ -84,7 +90,7 @@ class Issue3UseCasesTest extends TestCase
         $parameterBag  = new ParametersBag();
 
 
-        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag );
+        $issue3UseCases = new Issue3UseCases( $this -> postServices, $this -> request, $parameterBag,$this -> issue52UseCases );
 
         $issue3UseCases -> process();
 

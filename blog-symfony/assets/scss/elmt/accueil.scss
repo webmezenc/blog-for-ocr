@@ -1,0 +1,31 @@
+.elmt-accueil {
+
+  display: flex;
+
+  /** Mobile **/
+  @media screen and (max-width: 768px) {
+    & > div:nth-of-type(1) {
+      order: 1;
+      width: 100%;
+    }
+    & > div:nth-of-type(2) {
+      order: 0;
+      width: 100%;
+    }
+  }
+
+  /** Desktop **/
+  @media screen and (min-width: 768px) {
+    & > div:nth-of-type(1) {
+      order: 0;
+      width: 60%;
+    }
+    & > div:nth-of-type(2) {
+      margin-left: 5%;
+      order: 1;
+      width: 35%;
+    }
+  }
+
+
+}

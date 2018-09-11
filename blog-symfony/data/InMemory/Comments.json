@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "id_post_id": 1,
+    "id_user_id": 1,
+    "date_create": "2018-08-26 15:18:52",
+    "date_validation": null,
+    "content": "e er er et etr ert ",
+    "state": 0
+  },
+  {
+    "id": 2,
+    "id_post_id": 1,
+    "id_user_id": 1,
+    "date_create": "2018-08-26 15:18:52",
+    "date_validation": null,
+    "content": "e er er et etr ert ",
+    "state": 1
+  },
+  {
+    "id": 3,
+    "id_post_id": 1,
+    "id_user_id": 1,
+    "date_create": "2018-08-26 15:18:52",
+    "date_validation": null,
+    "content": "e er er et etr ert ",
+    "state": 1
+  },
+  {
+    "id": 4,
+    "id_post_id": 1,
+    "id_user_id": 1,
+    "date_create": "2018-08-26 15:18:52",
+    "date_validation": null,
+    "content": "e er er et etr ert ",
+    "state": 0
+  }
+]

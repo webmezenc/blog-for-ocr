@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comments;
+use App\Entity\Post;
+use App\Infrastructure\Repository\Entity\RepositoryAdapterInterface;
+use App\Infrastructure\Repository\Entity\RepositoryEntityManagerAdapterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,11 +15,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Comments[]    findAll()
  * @method Comments[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CommentsRepository extends ServiceEntityRepository
+class CommentsRepository extends Repository implements RepositoryAdapterInterface, RepositoryEntityManagerAdapterInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Comments::class);
+    }
+
+    public function getEntityManager()
+    {
+        return parent::getEntityManager();
+    }
+
+    /**
+     * @param Post $post
+     * @return Comments[]
+     */
+    public function findCommentsPublishByPost( Post $post ) {
+        return $this -> findBy([
+            "id_post" => $post,
+            "state" => Post::POST_PUBLISHED
+        ]);
     }
 
 //    /**

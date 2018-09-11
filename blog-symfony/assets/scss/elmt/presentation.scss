@@ -1,0 +1,29 @@
+.elmt-presentation {
+  align-self: start;
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    width: 50%;
+  }
+
+  div:nth-of-type(1) {
+    order: 0;
+  }
+  div:nth-of-type(2) {
+    order: 1;
+    padding-left: 10px;
+    text-align: center;
+    span {
+      display: block;
+      margin-top: 10px;
+    }
+  }
+
+  a {
+    margin: 20px 0;
+    flex: 1;
+    order: 2;
+    width: 100%;
+  }
+}

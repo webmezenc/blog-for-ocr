@@ -279,10 +279,10 @@
     "id": 25,
     "id_post_category_id": 1,
     "id_user_id": 1,
-    "state": 1,
+    "state": 0,
     "date_create": "2018-07-26 15:58:22",
     "date_update": null,
-    "slug": "post24",
+    "slug": "unittestnotpublished",
     "title": "Post test",
     "headcontent": "head test",
     "content": "Post test"
@@ -294,7 +294,7 @@
     "state": 1,
     "date_create": "2018-07-26 15:58:22",
     "date_update": null,
-    "slug": "post25",
+    "slug": "blog-is-open",
     "title": "Post test",
     "headcontent": "head test",
     "content": "Post test"

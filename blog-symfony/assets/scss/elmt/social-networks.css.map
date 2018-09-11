@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,uBAAE;EACA,KAAK,EAAE,KAAK;EAEZ,6BAAQ;IACN,KAAK,EAAE,wBAAqB",
+"sources": ["social-networks.scss"],
+"names": [],
+"file": "social-networks.css"
+}
