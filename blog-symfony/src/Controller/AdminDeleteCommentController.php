@@ -11,12 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AdminDeleteCommentController extends AppController
 {
     /**
-     * @var Request
-     */
-    private $request;
-
-
-    /**
      * @var int
      */
     private $id;
@@ -24,10 +18,9 @@ class AdminDeleteCommentController extends AppController
     /**
      * @Route("/admin/comments/delete/{id}", name="admin_delete_comment")
      */
-    public function index($id,Request $request)
+    public function index($id)
     {
         $this -> id = $id;
-        $this -> request = $request;
         return $this -> processController( array($this,'deleteComment'), [] );
     }
 
